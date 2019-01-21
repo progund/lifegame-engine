@@ -9,6 +9,8 @@ public class Situation {
     private String question;
     private List<Suggestion> suggestions;
 
+    public static Situation endSituation = new Situation("End of game", "Your life is complete, you've made it.", null, null);
+
     public Situation(String title, String description, String question, List<Suggestion> suggestions) {
         this.title = title;
         this.description = description;

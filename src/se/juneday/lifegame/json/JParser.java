@@ -8,6 +8,7 @@ import se.juneday.lifegame.domain.Exit;
 import se.juneday.lifegame.domain.Game;
 import se.juneday.lifegame.domain.Situation;
 import se.juneday.lifegame.domain.Suggestion;
+import se.juneday.lifegame.util.Log;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,6 +36,7 @@ public class JParser {
     public final static String SITUATION_SUGGESTION_EXITS = "exits";
     public final static String SITUATION_SUGGESTION_EXITS_EXPR = "expr";
     public final static String SITUATION_SUGGESTION_EXITS_SITUATION = "situation";
+    private static final String LOG_TAG =JParser.class.getSimpleName() ;
 
     public List<Exit> exits(JSONArray jsonExits) {
         return null;
@@ -60,7 +62,7 @@ public class JParser {
             String sDescription = jsonSituation.getString(SITUATION_DESCRIPTION);
             String sQuestion = jsonSituation.getString(SITUATION_QUESTION);
             JSONArray exits = jsonSituation.getJSONArray(SITUATION_SUGGESTIONS);
-            System.out.print("exits: " + exits);
+            Log.d(LOG_TAG, "exits: " + exits);
 
             // for each suggestion
             List<Suggestion> suggestionList = new ArrayList<>();

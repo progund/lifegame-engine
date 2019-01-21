@@ -5,12 +5,14 @@ import se.juneday.lifegame.domain.Game;
 import se.juneday.lifegame.domain.Situation;
 import se.juneday.lifegame.domain.Suggestion;
 import se.juneday.lifegame.json.JParser;
+import se.juneday.lifegame.util.Log;
 
 import java.util.List;
 import java.util.Map;
 
 public class LifeGameEngine {
 
+    private static final String LOG_TAG = LifeGameEngine.class.getSimpleName();
     private Game game;
     private Situation current;
 
@@ -31,22 +33,34 @@ public class LifeGameEngine {
     public Situation handleExit(String answer) {
         game.incSituationCount();
 
-        System.out.println("handleExit(" + answer + ") ");
+        Log.d(LOG_TAG,"handleExit(" + answer + ") ");
         for (Suggestion suggestion : current.suggestions()) {
-            System.out.println("handleExit(" + answer + "):   " + suggestion);
+            Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion);
             if (answer.equals(suggestion.phrase())) {
-                System.out.println("handleExit(" + answer + "):   " + suggestion + " found");
+                Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ " found");
                 for (Exit e : suggestion.exits()) {
-                    System.out.println("handleExit(" + answer + "):   " + suggestion + "   exit: " + e);
+                    Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
                     if (e.isTrue(game)) {
+                        Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
                         String title = e.exit();
-                        System.out.println("handleExit(" + answer + "):   " + suggestion + "   exit: " + e +  "  title: " + title);
+                        Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e +  "  title: " + title + " RETURNING");
                         current = game.getSituation(title);
+                        Log.d(LOG_TAG,"handleExit(" + answer + "):   " + current);
+                        Log.d(LOG_TAG,"handleExit(" + answer + "):   " + current.title());
+                        if (current.title().equals("End of game")) {
+                            Log.d(LOG_TAG,"You win!!");
+                            current = Situation.endSituation;
+                        }
                         return current;
                     }
                 }
+                Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase() + " handled");
             }
 
+        }
+        if (current.title().equals("End of game")) {
+            Log.d(LOG_TAG,"You win!!");
+            current = Situation.endSituation;
         }
         return current;
     }

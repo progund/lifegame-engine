@@ -14,6 +14,7 @@ public class Game {
     public Game(String title, Map<String, Situation> situations, Situation startSitution) {
         this.title = title;
         this.situations = situations;
+        situations.put("End of game", Situation.endSituation);
         this.startSitution = startSitution;
         situationCount = 1;
     }

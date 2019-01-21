@@ -1,16 +1,16 @@
 {
-    "title": "Univ base game",
-    "start": "Dark room",
+    "title": "University Game - A quest for Nirvana in Academia",
+    "start": "Lecture hall",
     "situations": [
         {
-            "title": "Dark room",
-            "description": "You're in a dark room, faced in front of a committee",
+            "title": "Lecture hall",
+            "description": "You're in a lecture room filled with students eagerly awaiting some proverbs from the professor.",
             "question":"What do you do?",
             "suggestions": [
-                { "phrase": "Tell 'em to fuck off",
+                { "phrase": "Consider going home",
                   "exits": [
-                      { "expr":"situations > 1", "situation": "White room" },
-                      { "expr":"def", "Situation": "Dark room"}
+                      { "expr":"situations > 2 AND situations < 3", "situation": "White room" },
+                      { "expr":"def", "Situation": "Lecture hall"}
                   ]
                 },
                 { "phrase": "Listen to what they say and follow instruction", "exit":"Dark room"}
@@ -21,8 +21,8 @@
             "description": "You're in a white room, faced in front of a committee",
             "question":"What do you do?",
             "suggestions": [
-                { "phrase": "true", "exit":"Exit room"},
-                { "phrase": "false", "exit":"Dark room"}
+                { "phrase": "Go", "exit":"Exit room"},
+                { "phrase": "Start", "exit":"Dark room"}
             ]
         },
         {
@@ -30,7 +30,7 @@
             "description": "You're in a white room, faced in front of a committee",
             "question":"How do you celebrate",
             "suggestions": [
-                { "phrase": "Tell 'em to fuck off", "exit":"Exit room"},
+                { "phrase": "Tell 'em to fuck off", "exit":"End of game"},
                 { "phrase": "Listen to what they say and follow instruction", "exit":"Dark room"}
             ]
         }        

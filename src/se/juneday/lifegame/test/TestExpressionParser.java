@@ -15,6 +15,8 @@ public class TestExpressionParser {
     public static void main(String[] args) {
 
         LifeGameEngine lengine = new LifeGameEngine("data/univ.json");
+        System.out.println();
+
 
         System.out.println("You're in: " + lengine.situation().title());
         lengine.handleExit("Tell 'em to fuck off");
@@ -23,14 +25,18 @@ public class TestExpressionParser {
         lengine.handleExit("Tell 'em to fuck off");
 
         System.out.println("You're in: " + lengine.situation().title());
-        lengine.handleExit("Tell 'em to fuck off");
+        lengine.handleExit("Go");
+
+        System.out.println("You're in: " + lengine.situation().title());
+        lengine.handleExit("Listen to what they say and follow instruction");
 
         System.out.println("You're in: " + lengine.situation().title());
         lengine.handleExit("Tell 'em to fuck off");
 
         System.out.println("You're in: " + lengine.situation().title());
-        lengine.handleExit("Tell 'em to fuck off");
+        lengine.handleExit("Go");
 
+        System.out.println("You're in: " + lengine.situation().title());
 
     }
 

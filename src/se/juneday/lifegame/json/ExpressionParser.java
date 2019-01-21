@@ -1,6 +1,7 @@
 package se.juneday.lifegame.json;
 
 import se.juneday.lifegame.domain.Game;
+import se.juneday.lifegame.util.Log;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -20,12 +21,13 @@ public class ExpressionParser {
     public final static String OR = "OR";
 
     public final static String GT = ">";
-    public final static String LT = ">=";
+    public final static String LT = "<";
     public final static String EQ = "==";
     public final static String NE = "!=";
 
     public final static String POINTS = "points";
     public final static String SITUATIONS = "situations";
+    private static final String LOG_TAG = ExpressionParser.class.getSimpleName();
 
     private Set<String> logicalOperators;
     private Set<String> compareOperators;
@@ -79,13 +81,13 @@ public class ExpressionParser {
     private Predicate<Game> createPredicate(SimpleExpr se) {
         if (!validateSimpleExpr(se)) {
             // TODO: throw exception
-            System.out.println("ERROR in expression: " + se);
+            Log.d(LOG_TAG,"ERROR in expression: " + se);
         }
 
-        System.out.println("createPredicate(" + se + ") ==> " + "new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
+        Log.d(LOG_TAG,"createPredicate(" + se + ") ==> " + "new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
         try {
-            System.out.println("createPredicate(" + se + ") ==> " + "new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
+            Log.d(LOG_TAG,"createPredicate(" + se + ") ==> " + "new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
             return (Predicate<Game>) engine.eval("new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
         } catch (ScriptException e) {
             e.printStackTrace();
@@ -116,54 +118,55 @@ public class ExpressionParser {
         SimpleExpr se = new SimpleExpr();
         for (String e : expressions) {
             if (validateSimpleExpr(se)) {
-                System.out.println("Valid expression:" + se.op1 + " " + se.expr + " " + se.op2);
-                return createPredicate(se);
+                Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
+                predicate.and(createPredicate(se));
+                invalidateSimpleExpr(se);
             } else {
-                System.out.println("Invalid expression:" + se.op1 + " " + se.expr + " " + se.op2);
+                Log.d(LOG_TAG,"Invalid expression:" + se.op1 + " " + se.expr + " " + se.op2);
             }
-            //   System.out.println(" Check: " + e);
+            //   Log.d(LOG_TAG," Check: " + e);
             if (e.equals("")) {
-                System.out.println(" * empty string");
+                Log.d(LOG_TAG," * empty string");
             } else if (logicalOperators.contains(e)) {
-                System.out.println(" * logical operator: " + e);
+                Log.d(LOG_TAG," * logical operator: " + e);
                 if (validateSimpleExpr(se)) {
-                    System.out.println("Adding logical expression: " + e + "  " + se);
+                    Log.d(LOG_TAG,"Adding logical expression: " + e + "  " + se);
                 } else {
                     // TODO: throw exception
-                    System.out.println("Invalid expression");
+                    Log.d(LOG_TAG,"Invalid expression");
                 }
 
             } else if (compareOperators.contains(e)) {
-                System.out.println(" * compareoperator: " + e);
-                System.out.println(" * game: " + e);
+                Log.d(LOG_TAG," * compareoperator: " + e);
+                Log.d(LOG_TAG," * game: " + e);
                 if (se.op1 == null || se.op2 != null) {
-                    System.out.println(" * INVALID SYNTAX");
+                    Log.d(LOG_TAG," * INVALID SYNTAX");
                 } else {
                     se.expr = e;
                 }
             } else if (gameExpressions.contains(e)) {
-                System.out.println(" * game expr: " + e);
+                Log.d(LOG_TAG," * game expr: " + e);
                 if (se.op1 != null) {
                     se.op2 = e;
                 } else {
                     se.op1 = e;
                 }
             } else if (isNumeric(e)) {
-                System.out.println(" * number: " + e);
+                Log.d(LOG_TAG," * number: " + e);
                 if (se.op1 != null) {
                     se.op2 = e;
                 } else {
                     se.op1 = e;
                 }
             } else {
-                System.out.println(" * UNKNOWN: \"" + e + "\"");
+                Log.d(LOG_TAG," * UNKNOWN: \"" + e + "\"");
             }
         }
         if (validateSimpleExpr(se)) {
-            System.out.println("Valid expression:" + se.op1 + " " + se.expr + " " + se.op2);
-            return createPredicate(se);
+            Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
+            predicate.and(createPredicate(se));
         }
-        return null;
+        return predicate;
     }
 
 }
