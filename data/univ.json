@@ -1,0 +1,38 @@
+{
+    "title": "Univ base game",
+    "start": "Dark room",
+    "situations": [
+        {
+            "title": "Dark room",
+            "description": "You're in a dark room, faced in front of a committee",
+            "question":"What do you do?",
+            "suggestions": [
+                { "phrase": "Tell 'em to fuck off",
+                  "exits": [
+                      { "expr":"situations > 1", "situation": "White room" },
+                      { "expr":"def", "Situation": "Dark room"}
+                  ]
+                },
+                { "phrase": "Listen to what they say and follow instruction", "exit":"Dark room"}
+            ]
+        },
+        {
+            "title": "White room",
+            "description": "You're in a white room, faced in front of a committee",
+            "question":"What do you do?",
+            "suggestions": [
+                { "phrase": "true", "exit":"Exit room"},
+                { "phrase": "false", "exit":"Dark room"}
+            ]
+        },
+        {
+            "title": "Exit room",
+            "description": "You're in a white room, faced in front of a committee",
+            "question":"How do you celebrate",
+            "suggestions": [
+                { "phrase": "Tell 'em to fuck off", "exit":"Exit room"},
+                { "phrase": "Listen to what they say and follow instruction", "exit":"Dark room"}
+            ]
+        }        
+    ]
+}
