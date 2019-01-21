@@ -7,12 +7,13 @@ import java.io.PrintStream;
 public class Log {
 
     public enum LogLevel {
-        QUIET,
-        ERROR,
-        WARN,
-        INFO,
-        DEBUG,
-        VERBOSE
+      QUIET,
+      ERROR,
+      WARN,
+      INFO,
+      DEBUG,
+      VERBOSE;
+
     }
 
     private static LogLevel logLevel = LogLevel.ERROR;
@@ -34,7 +35,7 @@ public class Log {
 
     private static void printTagMessage(String tag, String message) {
         if (includeTag!=null) {
-            if (!tag.contains(includeTag)) {
+          if (!tag.contains(includeTag)) {
                 return;
             }
         }
@@ -47,7 +48,9 @@ public class Log {
     }
 
     public static void d(String tag, String message) {
-
+      if (logLevel.compareTo(LogLevel.DEBUG) >= 0) {
+        printTagMessage(tag, message);
+      }
     }
 
 }

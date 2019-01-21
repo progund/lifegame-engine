@@ -20,9 +20,10 @@ all: $(BIN_DIR)  $(JAVA_CLASSES)
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR) 
 
-cli:
+cli: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI)
 
 clean:
 	rm -f $(JAVA_CLASSES)
 	find . -name "*~" | xargs rm -f
+	find . -name "*.class" | xargs rm -f

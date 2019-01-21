@@ -30,12 +30,17 @@ public class LifeCli {
 
     public static void main(String[] args) {
 
+      Log.logLevel(Log.LogLevel.INFO);
+        // Log.includeTag("LifeGame");
+
         LifeGameEngine engine = new LifeGameEngine("data/univ.json");
 
 
         Situation here = engine.situation();
 
-        while(here!=null && (!engine.gameOver()) ) {
+        while( here!=null
+               &&
+               !engine.gameOver() ) {
             println("You're in: " + here.title());
             println(here.description());
             println(here.question());
