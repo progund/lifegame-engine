@@ -35,7 +35,7 @@ public class LifeCli {
 
         Situation here = engine.situation();
 
-        while(here!=null && here!=Situation.endSituation) {
+        while(here!=null && (!engine.gameOver()) ) {
             println("You're in: " + here.title());
             println(here.description());
             println(here.question());
@@ -56,6 +56,11 @@ public class LifeCli {
                 println("Your input " + input + " was invalid. Choose again");
             }
         }
+        println("");
+        println("");
+        println("  You've won!");
+        println("");
+        println("");
 
     }
 

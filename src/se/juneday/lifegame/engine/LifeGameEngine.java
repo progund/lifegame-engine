@@ -30,6 +30,11 @@ public class LifeGameEngine {
         return current;
     }
 
+    public boolean gameOver() {
+        return current.title().equals("End of game");
+    }
+
+
     public Situation handleExit(String answer) {
         game.incSituationCount();
 
