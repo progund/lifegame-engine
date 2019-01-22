@@ -41,6 +41,10 @@ public class LifeCli {
         while( here!=null
                &&
                !engine.gameOver() ) {
+            Log.i(LOG_TAG, " Round information");
+            Log.i(LOG_TAG, "  Score:           " + engine.score());
+            Log.i(LOG_TAG, "  Situation count: " + engine.situationCount());
+            Log.i(LOG_TAG, "  Things:"           + engine.things());
             println("You're in: " + here.title());
             println(here.description());
             println(here.question());

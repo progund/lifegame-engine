@@ -1,9 +1,6 @@
 package se.juneday.lifegame.engine;
 
-import se.juneday.lifegame.domain.Exit;
-import se.juneday.lifegame.domain.Game;
-import se.juneday.lifegame.domain.Situation;
-import se.juneday.lifegame.domain.Suggestion;
+import se.juneday.lifegame.domain.*;
 import se.juneday.lifegame.json.JParser;
 import se.juneday.lifegame.util.Log;
 
@@ -30,6 +27,8 @@ public class LifeGameEngine {
         return current;
     }
 
+
+
     public boolean gameOver() {
         return current.title().equals("End of game");
     }
@@ -45,11 +44,31 @@ public class LifeGameEngine {
                 Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ " found");
                 for (Exit e : suggestion.exits()) {
                     Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
+                    System.out.println("handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
                     if (e.isTrue(game)) {
                         Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
                         String title = e.exit();
                         Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e +  "  title: " + title + " RETURNING");
+
+                        // Change situation
                         current = game.getSituation(title);
+
+                        for (ThingAction action : current.actions()) {
+                            Log.i(LOG_TAG," * action: " + action);
+                            switch (action.action()) {
+                                case TAKE:
+                                    Log.i(LOG_TAG," * TAKE: " + action.thing());
+                                    game.addThing(action.thing());
+                                    break;
+                                case DROP:
+                                    Log.i(LOG_TAG," * DROP: " + action.thing());
+                                    game.dropThing(action.thing());
+                                    break;
+                            }
+                        }
+
+
+
                         Log.d(LOG_TAG,"handleExit(" + answer + "):   " + current);
                         Log.d(LOG_TAG,"handleExit(" + answer + "):   " + current.title());
                         if (current.title().equals("End of game")) {
@@ -86,4 +105,15 @@ public class LifeGameEngine {
         game.decScore(amount);
     }
 
+    public Map<String, Integer> things() {
+        return game.things();
+    }
+
+    @Override
+    public String toString() {
+        return "LifeGameEngine{" +
+                "game=" + game +
+                ", current=" + current +
+                '}';
+    }
 }

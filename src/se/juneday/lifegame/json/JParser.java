@@ -4,19 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
-import se.juneday.lifegame.domain.Exit;
-import se.juneday.lifegame.domain.Game;
-import se.juneday.lifegame.domain.Situation;
-import se.juneday.lifegame.domain.Suggestion;
+import se.juneday.lifegame.domain.*;
 import se.juneday.lifegame.util.Log;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class JParser {
@@ -38,12 +32,23 @@ public class JParser {
     public final static String SITUATION_SUGGESTION_EXITS_SITUATION = "situation";
     private static final String LOG_TAG =JParser.class.getSimpleName() ;
 
+    public final static String SITUATION_THINGS = "things";
+    public final static String SITUATION_THINGS_ACTION = "action";
+    public final static String SITUATION_THINGS_THING = "thing";
+    public final static String SITUATION_THINGS_DROP = "drop";
+    public final static String SITUATION_THINGS_TAKE = "take";
+    public final static String SITUATION_THINGS_HAS = "has";
+/*    private Set<String> thingExpressions;
+        thingExpressions.addAll(Arrays.asList(new String[]{TAKE, THING, HAS}));
+*/
+
     public List<Exit> exits(JSONArray jsonExits) {
         return null;
     }
 
 
     private String readJsonString(JSONObject json, String key, String defaultValue) {
+        Log.d(LOG_TAG, " readJsonString()" + json + " key: " + key);
         try {
             return json.getString(key);
         } catch (JSONException e) {
@@ -63,6 +68,21 @@ public class JParser {
             String sQuestion = jsonSituation.getString(SITUATION_QUESTION);
             JSONArray exits = jsonSituation.getJSONArray(SITUATION_SUGGESTIONS);
             Log.d(LOG_TAG, "exits: " + exits);
+            List<ThingAction> actionList = new ArrayList<>();
+
+            // "things"
+            try {
+                JSONArray thingsJsonArray = jsonSituation.getJSONArray(SITUATION_THINGS);
+                for (int k = 0; k < thingsJsonArray.length(); k++) {
+                    JSONObject thingJson = thingsJsonArray.getJSONObject(k);
+                    String action = thingJson.getString(SITUATION_THINGS_ACTION);
+                    String thing = thingJson.getString(SITUATION_THINGS_THING);
+                    actionList.add(new ThingAction(action, thing));
+                    System.out.println(" ADDED THING: " + action + " " + thing + "  in " + title);
+                }
+            } catch (JSONException e) {
+                Log.d(LOG_TAG, "no things in " + title);
+            }
 
             // for each suggestion
             List<Suggestion> suggestionList = new ArrayList<>();
@@ -74,21 +94,35 @@ public class JParser {
                 String phrase = readJsonString(suggestionJson, SITUATION_SUGGESTION_PHRASE, "");
 
                 // "exit" (one single exit)
-                String exitStr = readJsonString(suggestionJson, SITUATION_SUGGESTION_EXIT, null);
+                Log.d(LOG_TAG, " trying to find exit in " + title + " => "+ suggestionJson);
+                String exitStr = null;
+                String expr = null;
+                try {
+//                    JSONObject exitJson = null;
+                    exitStr = readJsonString(suggestionJson, SITUATION_SUGGESTION_EXIT, null);
+                    //String exitStr = readJsonString(exitJson, SITUATION_SUGGESTION_PHRASE, null);
+                    expr = readJsonString(suggestionJson,SITUATION_SUGGESTION_EXITS_EXPR, null);
+                    Log.d(LOG_TAG, " trying to find exit in " + title + " => "+ exitStr+ "   <-----");
+                   // exitStr = readJsonString(exitJson, SITUATION_SUGGESTION_EXITS_SITUATION, null);
+                } catch (JSONException e) {
+                    Log.d(LOG_TAG, "Exception: ");
+                    //e.printStackTrace();
+                }
                 if (exitStr != null) {
-                    exitList.add(new Exit(g -> true, exitStr));
+                    System.out.println(" exit: " + expr + " " + exitStr);
+                    exitList.add(new Exit(ep.parse(expr), exitStr));
                 } else {
-
+                    Log.d(LOG_TAG, " trying to find exits in " + suggestionJson);
                     // "exits" (multiple exits depending on calculations)
                     JSONArray exitsJsonArray = suggestionJson.getJSONArray(SITUATION_SUGGESTION_EXITS);
                     // for each exits
                     for (int k = 0; k < exitsJsonArray.length(); k++) {
-                        JSONObject exitJson = exitsJsonArray.getJSONObject(j);
+                        JSONObject exitObject = exitsJsonArray.getJSONObject(j);
 
                         // expression to get to next situation
-                        String expr = exitJson.getString(SITUATION_SUGGESTION_EXITS_EXPR);
+                        expr = exitObject.getString(SITUATION_SUGGESTION_EXITS_EXPR);
                         // next situation
-                        String exit = exitJson.getString(SITUATION_SUGGESTION_EXITS_SITUATION);
+                        String exit = exitObject.getString(SITUATION_SUGGESTION_EXITS_SITUATION);
 
                         exitList.add(new Exit(ep.parse(expr), exit));
                     }
@@ -96,8 +130,9 @@ public class JParser {
                 Suggestion suggestion = new Suggestion(phrase, exitList);
                 suggestionList.add(suggestion);
             }
-            Situation situation = new Situation(title, sDescription, sQuestion, suggestionList);
+            Situation situation = new Situation(title, sDescription, sQuestion, suggestionList, actionList);
             situations.put(title, situation);
+            System.out.println(" ADDED SITUATION: " + situation);
         }
         return situations;
     }
@@ -108,7 +143,7 @@ public class JParser {
         JSONArray jsonSituations = jsondata.getJSONArray(GAME_SITUATIONS);
         Map<String, Situation> situations = situations(jsonSituations);
         Situation startSituation = situations.get(startSituationString);
-        return new Game(title, situations, startSituation);
+        return new Game(title, situations, startSituation, null);
     }
 
     public Game game(String jsonFile) {

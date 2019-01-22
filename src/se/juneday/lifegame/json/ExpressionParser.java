@@ -1,6 +1,7 @@
 package se.juneday.lifegame.json;
 
 import se.juneday.lifegame.domain.Game;
+import se.juneday.lifegame.domain.ThingAction;
 import se.juneday.lifegame.util.Log;
 
 import javax.script.ScriptEngine;
@@ -27,6 +28,7 @@ public class ExpressionParser {
 
     public final static String POINTS = "points";
     public final static String SITUATIONS = "situations";
+    public final static String HAS = "has";
     private static final String LOG_TAG = ExpressionParser.class.getSimpleName();
 
     private Set<String> logicalOperators;
@@ -52,25 +54,33 @@ public class ExpressionParser {
         return true;
     }
 
-    private class SimpleExpr {
-        String op1;
-        String expr;
-        String op2;
-
-        public String toString() {
-            return op1 + " " + expr + " " + op2;
-        }
-
-        ;
+  private class SimpleExpr {
+    String op1;
+    String expr;
+    String op2;
+    
+    public String toString() {
+      return op1 + " " + expr + " " + op2;
     }
-
-    private String gameExpressionToJava(String expr) {
+      ;
+  }
+  
+  private boolean isEmpty(ThingAction ta) {
+    return ( ta.action() == null && ta.thing() == null);
+  }
+  
+  
+  private String gameExpressionToJava(String expr) {
         if (expr.equals(POINTS)) {
             return "g.points()";
         } else {
             return "g.situationCount()";
         }
     }
+
+  private boolean isEmpty(SimpleExpr se) {
+    return ( se.op1 == null && se.expr == null && se.op2 == null);
+  }
 
     private void invalidateSimpleExpr(SimpleExpr se) {
         se.op1 = null;
@@ -109,17 +119,23 @@ public class ExpressionParser {
         return false;
     }
 
+  
     public Predicate<Game> parse(String exprString) {
+        if (exprString==null) {
+            return g -> true;
+        }
         String[] expressions = exprString.split(" ");
         List<String> simpleExpression;
 
         Predicate<Game> predicate = g -> true;
         String logicalOperator = "";
         SimpleExpr se = new SimpleExpr();
+        String thingAction = null;
         for (String e : expressions) {
+            System.out.println("e: " + e);
             if (validateSimpleExpr(se)) {
                 Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
-                predicate.and(createPredicate(se));
+                predicate = predicate.and(createPredicate(se));
                 invalidateSimpleExpr(se);
             } else {
                 Log.d(LOG_TAG,"Invalid expression:" + se.op1 + " " + se.expr + " " + se.op2);
@@ -145,12 +161,15 @@ public class ExpressionParser {
                     se.expr = e;
                 }
             } else if (gameExpressions.contains(e)) {
-                Log.d(LOG_TAG," * game expr: " + e);
+                Log.d(LOG_TAG, " * game expr: " + e);
                 if (se.op1 != null) {
                     se.op2 = e;
                 } else {
                     se.op1 = e;
                 }
+            } else if (e.equals(HAS)) {
+                thingAction = HAS;
+                System.out.println("Predicate, check started to add");
             } else if (isNumeric(e)) {
                 Log.d(LOG_TAG," * number: " + e);
                 if (se.op1 != null) {
@@ -159,12 +178,19 @@ public class ExpressionParser {
                     se.op1 = e;
                 }
             } else {
-                Log.d(LOG_TAG," * UNKNOWN: \"" + e + "\"");
+                if (thingAction!=null) {
+                    System.out.println("Predicate, check added to : " + predicate);
+                    Predicate<Game> pred = g -> { System.out.println("----------------------------------------Predicate, check: " + g.things().containsKey(e) + " | " + g.things().get(e)); ; return ( g.things().containsKey(e) && (g.things().get(e) > 0)); };
+                    predicate = predicate.and(pred);
+                    thingAction = null;
+                    System.out.println("Predicate, check added to : " + predicate);
+                }
+              Log.d(LOG_TAG," * UNKNOWN: \"" + e + "\"");
             }
         }
         if (validateSimpleExpr(se)) {
             Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
-            predicate.and(createPredicate(se));
+            predicate = predicate.and(createPredicate(se));
         }
         return predicate;
     }

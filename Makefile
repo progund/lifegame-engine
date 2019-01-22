@@ -23,6 +23,9 @@ $(BIN_DIR):
 cli: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI)
 
+autocli: $(JAVA_CLASSES)
+	printf "0\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI)
+
 clean:
 	rm -f $(JAVA_CLASSES)
 	find . -name "*~" | xargs rm -f

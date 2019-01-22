@@ -53,4 +53,9 @@ public class Log {
       }
     }
 
+    public static void i(String tag, String message) {
+        if (logLevel.compareTo(LogLevel.INFO) >= 0) {
+            printTagMessage(tag, message);
+        }
+    }
 }
