@@ -1,17 +1,17 @@
 package se.juneday.lifegame.domain;
 
+import java.lang.reflect.AccessibleObject;
+
 public class ThingAction {
 
-
-
-    public enum Action {
+/*    public enum Action {
         TAKE,
         DROP
     } ;
-
-    private Action action;
+*/
+  //  private Action action;
     private String thing;
-
+/*
     public ThingAction(String actionString, String thing) {
         try {
             this.action = Action.valueOf(actionString.toUpperCase());
@@ -25,10 +25,16 @@ public class ThingAction {
         this.action = action;
         this.thing = thing;
     }
+*/
 
-    public Action action() {
+    public ThingAction(String thing) {
+        this.thing = thing;
+    }
+
+/*    public Action action() {
         return action;
     }
+*/
 
     public String thing() {
         return thing;
@@ -37,8 +43,9 @@ public class ThingAction {
     @Override
     public String toString() {
         return "ThingAction{" +
-                "action=" + action +
+  //              "action=" + action +
                 ", thing='" + thing + '\'' +
                 '}';
     }
+
 }

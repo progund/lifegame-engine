@@ -42,6 +42,16 @@ public class Situation {
     public List<ThingAction> actions() {
         return actions;
     }
+/*
+    public void removeActionThing(ThingAction t) {
+        actions.remove(t);
+    }
+
+    public void addActionThing(ThingAction t) {
+        actions.add(t);
+    }
+*/
+
 
     @Override
     public String toString() {

@@ -77,7 +77,7 @@ public class JParser {
                     JSONObject thingJson = thingsJsonArray.getJSONObject(k);
                     String action = thingJson.getString(SITUATION_THINGS_ACTION);
                     String thing = thingJson.getString(SITUATION_THINGS_THING);
-                    actionList.add(new ThingAction(action, thing));
+                    actionList.add(new ThingAction(thing));
                     System.out.println(" ADDED THING: " + action + " " + thing + "  in " + title);
                 }
             } catch (JSONException e) {

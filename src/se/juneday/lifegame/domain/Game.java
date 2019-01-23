@@ -62,12 +62,12 @@ public class Game {
         return things;
     }
 
-    public void addThing(String thing) {
-        Integer count = things.get(thing);
+    public void addThing(ThingAction thing) {
+        Integer count = things.get(thing.thing());
         if (count == null) {
-            things.put(thing, 1);
+            things.put(thing.thing(), 1);
         } else {
-            things.put(thing, count + 1);
+            things.put(thing.thing(), count + 1);
         }
     }
 

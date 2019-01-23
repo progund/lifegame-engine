@@ -64,11 +64,12 @@ public class ExpressionParser {
     }
       ;
   }
-  
+
+  /*
   private boolean isEmpty(ThingAction ta) {
     return ( ta.action() == null && ta.thing() == null);
   }
-  
+  */
   
   private String gameExpressionToJava(String expr) {
         if (expr.equals(POINTS)) {
