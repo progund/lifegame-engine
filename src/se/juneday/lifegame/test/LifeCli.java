@@ -48,7 +48,7 @@ public class LifeCli {
             Log.i(LOG_TAG, "  Situation count: " + engine.situationCount());
             Log.i(LOG_TAG, "  Things:"           + engine.things() + " / " + engine.situation().actions());
             println("You're in: " + here.title());
-            println(here.description());
+            println("n");
             println(here.question());
             int idx=0;
             println("Suggestions:");
