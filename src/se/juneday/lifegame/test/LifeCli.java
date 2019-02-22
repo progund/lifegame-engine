@@ -43,6 +43,12 @@ public class LifeCli {
                !engine.gameOver() ) {
             println("\n\n\n ---=== " + here.title() + " ===---\n");
             println(here.description() + "\n");
+            Log.i(LOG_TAG, " Round information");
+            Log.i(LOG_TAG, "  Score:           " + engine.score());
+            Log.i(LOG_TAG, "  Situation count: " + engine.situationCount());
+            Log.i(LOG_TAG, "  Things:"           + engine.things() + " / " + engine.situation().actions());
+            println("You're in: " + here.title());
+            println(here.description());
             println(here.question());
             int idx=0;
             println("Suggestions:");
@@ -57,7 +63,7 @@ public class LifeCli {
                 Log.d(LOG_TAG, "You said: " + input + " => " + menuIndex + " => " + phrase );
                 engine.handleExit(phrase);
                 here = engine.situation();
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
                 println("Your input " + input + " was invalid. Choose again");
             }
         }

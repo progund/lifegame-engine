@@ -13,25 +13,49 @@
                       { "expr":"def", "Situation": "Lecture hall"}
                   ]
                 },
-                { "phrase": "Listen to what they say and follow instruction", "exit":"Dark room"}
+                { "phrase": "Listen to what they say and follow instruction", "exit":"White room"}
             ]
         },
         {
             "title": "White room",
             "description": "You're in a white room, faced in front of a committee",
             "question":"What do you do?",
+            "things": [
+                { "action": "take", "thing":"coin" }
+            ],
             "suggestions": [
-                { "phrase": "Go", "exit":"Exit room"},
-                { "phrase": "Start", "exit":"Dark room"}
+                { "phrase": "Go",
+                  "exit":"Green room",
+                  "expr": "has coin"
+                },
+                { "phrase": "Stay",
+                  "exit":"White room"}
+            ]
+        },
+        {
+            "title": "Green room",
+            "description": "You're in a white room, faced in front of a committee",
+            "question":"What do you do?",
+            "things": [
+                { "action": "drop", "thing": "coin" }
+            ],
+            "suggestions": [
+                { "phrase": "Go",
+                  "exits": [
+                      { "expr":" situations < 3", "situation": "White room" },
+                      { "expr":"def", "situation": "Lecture hall"}
+                  ]
+                },
+                { "phrase": "Start", "exit":"Exit room"}
             ]
         },
         {
             "title": "Exit room",
-            "description": "You're in a white room, faced in front of a committee",
+            "description": "You're in an room, faced in front of a committee",
             "question":"How do you celebrate",
             "suggestions": [
                 { "phrase": "Tell 'em to fuck off", "exit":"End of game"},
-                { "phrase": "Listen to what they say and follow instruction", "exit":"Dark room"}
+                { "phrase": "Listen to what they say and follow instruction", "exit":"Lecture hall"}
             ]
         }        
     ]
