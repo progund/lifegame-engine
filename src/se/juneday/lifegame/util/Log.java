@@ -53,4 +53,10 @@ public class Log {
       }
     }
 
+    public static void e(String tag, String message) {
+      if (logLevel.compareTo(LogLevel.ERROR) >= 0) {
+        printTagMessage(tag, message);
+      }
+    }
+
 }

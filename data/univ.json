@@ -9,7 +9,7 @@
             "suggestions": [
                 { "phrase": "Consider going home",
                   "exits": [
-                      { "expr":"situations > 2 AND situations < 3", "situation": "White room" },
+                      { "expr":"situations > 3 AND situations < 100 AND situations != 2 AND situations == 5  ", "situation": "White room" },
                       { "expr":"def", "Situation": "Lecture hall"}
                   ]
                 },

@@ -41,8 +41,8 @@ public class LifeCli {
         while( here!=null
                &&
                !engine.gameOver() ) {
-            println("You're in: " + here.title());
-            println(here.description());
+            println("\n\n\n ---=== " + here.title() + " ===---\n");
+            println(here.description() + "\n");
             println(here.question());
             int idx=0;
             println("Suggestions:");

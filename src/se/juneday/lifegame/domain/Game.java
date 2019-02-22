@@ -16,7 +16,7 @@ public class Game {
         this.situations = situations;
         situations.put("End of game", Situation.endSituation);
         this.startSitution = startSitution;
-        situationCount = 1;
+        situationCount = 0;
     }
 
     public Situation getSituation(String title) {

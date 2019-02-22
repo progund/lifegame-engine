@@ -77,8 +77,8 @@ public class JParser {
                 String exitStr = readJsonString(suggestionJson, SITUATION_SUGGESTION_EXIT, null);
                 if (exitStr != null) {
                     exitList.add(new Exit(g -> true, exitStr));
-                } else {
 
+                } else {
                     // "exits" (multiple exits depending on calculations)
                     JSONArray exitsJsonArray = suggestionJson.getJSONArray(SITUATION_SUGGESTION_EXITS);
                     // for each exits

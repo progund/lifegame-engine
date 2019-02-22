@@ -36,7 +36,7 @@ public class LifeGameEngine {
 
 
     public Situation handleExit(String answer) {
-        game.incSituationCount();
+      game.incSituationCount();
 
         Log.d(LOG_TAG,"handleExit(" + answer + ") ");
         for (Suggestion suggestion : current.suggestions()) {
@@ -45,6 +45,8 @@ public class LifeGameEngine {
                 Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ " found");
                 for (Exit e : suggestion.exits()) {
                     Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
+                    Log.d(LOG_TAG,"handleExit:    situation count: " + situationCount());
+                    
                     if (e.isTrue(game)) {
                         Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
                         String title = e.exit();
@@ -67,7 +69,8 @@ public class LifeGameEngine {
             Log.d(LOG_TAG,"You win!!");
             current = Situation.endSituation;
         }
-        return current;
+        Log.e(LOG_TAG, "Odd, we seem to have gotten an answer not suggested");
+        return null;
     }
 
     public int situationCount() {
