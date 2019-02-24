@@ -1,0 +1,90 @@
+{
+    "title": "Universitetsspelet - Nå Nirvana i akademin",
+    "start": "Entren",
+    "situations": [
+        {
+            "title": "Föreläsningssal A",
+            "description": "Du befinner du i en föreläsningssal full med studenter. Alla verkar förväntansfulla inför visdomsord från föreläsaren.",
+            "question":"Vad gör du?",
+            "suggestions": [
+                { "phrase": "Funderar på att gå hem",
+                  "exits": [
+                      { "expr":"situations > 3 AND situations < 100 AND situations != 2 AND situations == 5  ", "situation": "White room" },
+                      { "expr":"def", "Situation": "Dörren ut"}
+                  ]
+                },
+                { "phrase": "Lyssnar lite på vad som sägs och går vidare mot studentrummet.", "exit":"Studentrummet"},
+                { "phrase": "Kollar på klockan och ser att den bara 10. Avvaktar", "exit":"Föreläsningssal A"},
+                { "phrase": "Går mot utgången", "exit":"Entren"}
+            ]
+        },
+        {
+            "title": "Studentrummet",
+            "description": "Du befinner dig i studentrumet. Ingen TV, dock ok trådlöst internet. ",
+            "question":"Vad gör du?",
+            "things": [
+                { "thing": "pengar" }
+            ],
+            "suggestions": [
+                { "phrase": "Gå till puben",
+                  "exits": [
+                      { 
+                          "situation": "Puben",
+                          "expr": "has pengar"
+                      }
+                  ]
+                },
+                { "phrase": "Stanna i Studentrummet",
+                  "exit":"Studentrummet"}
+            ]
+        },
+        {
+            "title": "Entren",
+            "description": "Du befinner dig i ingången till universitetet",
+            "question":"Vad gör du?",
+            "things": [
+                { "thing": "penna" }
+            ],
+            "suggestions": [
+                { "phrase": "Går in",
+                  "exits": [
+                      { "expr":" situations < 10", "situation": "Föreläsningssal A" },
+                      { "expr":"def", "situation": "Dörren ut"}
+                  ]
+                },
+                { "phrase": "Vänder om och går ut", "exit":"Dörren ut"}
+            ]
+        },
+        {
+            "title": "Puben",
+            "description": "Du står vid baren i en pub. Trots all mesig IPA och annan skit ser du en riktig öl på tapp, en Pilsner.",
+            "question":"Vad gör du?",
+            "things": [
+                { "thing": "glas" }
+            ],
+            "suggestions": [
+                { "phrase": "Går mot utgången",
+                  "exits": [
+                      { "expr":" score > 3 ", "situation": "Dörren ut" },
+                      { "expr":"def", "situation": "Föreläsningssal A"}
+                  ]
+                },
+                { "phrase": "Tar en öl", "score": 2 , "exit": "Puben"}
+            ]
+        },
+        {
+            "title": "Dörren ut",
+            "description": "Du ser ut mot världen utanför, solen skiner och klockan är efter 11.",
+            "question":"Vad gör du?",
+            "suggestions": [
+                { "phrase": "Skit samma, jag går ut",
+                  "exits": [
+                      { "expr": " score > 10", "situation": "End of game"},
+                      { "expr": "def", "situation": "Dörren ut"}
+                  ]
+                },
+                { "phrase": "Vänder om och går in", "exit":"Föreläsningssal A"}
+            ]
+        }        
+    ]
+}
