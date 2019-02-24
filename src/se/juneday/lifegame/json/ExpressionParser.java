@@ -2,6 +2,7 @@ package se.juneday.lifegame.json;
 
 import se.juneday.lifegame.domain.Game;
 import se.juneday.lifegame.domain.ThingAction;
+import se.juneday.lifegame.domain.InvalidLifeException;
 import se.juneday.lifegame.util.Log;
 
 // import javax.script.ScriptEngine;
@@ -27,7 +28,7 @@ public class ExpressionParser {
     public final static String EQ = "==";
     public final static String NE = "!=";
 
-    public final static String POINTS = "points";
+    public final static String SCORE = "score";
     public final static String SITUATIONS = "situations";
     public final static String HAS = "has";
     private static final String LOG_TAG = ExpressionParser.class.getSimpleName();
@@ -36,6 +37,9 @@ public class ExpressionParser {
     private Set<String> compareOperators;
     private Set<String> gameExpressions;
 
+  private Set<String> thingsNeeded;
+  private Set<String> thingsExisting;
+
 
     public ExpressionParser() {
         logicalOperators = new HashSet<>();
@@ -43,7 +47,9 @@ public class ExpressionParser {
         gameExpressions = new HashSet<>();
         logicalOperators.addAll(Arrays.asList(new String[]{AND, OR}));
         compareOperators.addAll(Arrays.asList(new String[]{GT, LT, EQ, NE}));
-        gameExpressions.addAll(Arrays.asList(new String[]{POINTS, SITUATIONS}));
+        gameExpressions.addAll(Arrays.asList(new String[]{SCORE, SITUATIONS}));
+
+        thingsNeeded = new HashSet<>();
     }
 
     private static boolean isNumeric(String str) {
@@ -73,7 +79,7 @@ public class ExpressionParser {
   */
   
   private String gameExpressionToJava(String expr) {
-        if (expr.equals(POINTS)) {
+        if (expr.equals(SCORE)) {
             return "g.points()";
         } else {
             return "g.situationCount()";
@@ -92,17 +98,17 @@ public class ExpressionParser {
   
   private  Predicate<Game> createPointsGTPredicate(SimpleExpr se) {
     switch (se.op2) {
-    case POINTS:
+    case SCORE:
       return g -> g.score() > g.score();
     case SITUATIONS:
       return g -> g.score() > g.situationCount();
     default:
       return g -> {
         Log.d(LOG_TAG," +++++++++++ score "
-              + g.score() + " < value "
+              + g.score() + " > value "
               + Integer.parseInt(se.op2) + " ==> "
-              + (g.score() < Integer.parseInt(se.op2)) );
-        return g.score() < Integer.parseInt(se.op2);
+              + (g.score() > Integer.parseInt(se.op2)) );
+        return g.score() > Integer.parseInt(se.op2);
       };
     }
   }
@@ -121,7 +127,7 @@ public class ExpressionParser {
 
   private  Predicate<Game> createSituationsLTPredicate(SimpleExpr se) {
     switch (se.op2) {
-    case POINTS:
+    case SCORE:
       return g -> g.situationCount() < g.score();
     case SITUATIONS:
       return g -> g.situationCount() < g.situationCount();
@@ -138,7 +144,7 @@ public class ExpressionParser {
 
   private  Predicate<Game> createSituationsGTPredicate(SimpleExpr se) {
     switch (se.op2) {
-    case POINTS:
+    case SCORE:
       return g -> g.situationCount() > g.score();
     case SITUATIONS:
       return g -> g.situationCount() > g.situationCount();
@@ -155,7 +161,7 @@ public class ExpressionParser {
 
   private  Predicate<Game> createSituationsEQPredicate(SimpleExpr se) {
     switch (se.op2) {
-    case POINTS:
+    case SCORE:
       return g -> g.situationCount() == g.score();
     case SITUATIONS:
       return g -> g.situationCount() == g.situationCount();
@@ -173,7 +179,7 @@ public class ExpressionParser {
 
   private  Predicate<Game> createSituationsNEPredicate(SimpleExpr se) {
     switch (se.op2) {
-    case POINTS:
+    case SCORE:
       return g -> g.situationCount() != g.score();
     case SITUATIONS:
       return g -> g.situationCount() != g.situationCount();
@@ -226,7 +232,7 @@ public class ExpressionParser {
         }
 
         switch (se.op1) {
-        case POINTS:
+        case SCORE:
           return createPointsPredicate(se);
         case SITUATIONS:
           return createSituationsPredicate(se);
@@ -263,8 +269,17 @@ public class ExpressionParser {
     }
   */
 
+  protected Set<String> thingsNeeded() {
+    return thingsNeeded;
+  }
+  
     private boolean validateHasExpression(SimpleExpr se) {
-      return (se.op1 == null) && (HAS.equals(se.expr)) && (se.op2!=null);
+      if ( (se.op1 == null) && (HAS.equals(se.expr)) && (se.op2!=null) ) {
+        thingsNeeded.add(se.op2);
+        return true;
+      } else {
+        return false;
+      }
     }
   
     private boolean validateSimpleExpr(SimpleExpr se) {
@@ -277,11 +292,12 @@ public class ExpressionParser {
       if (validateHasExpression(se)) {
         return true;
       }
-      Log.e(LOG_TAG, "Invalid Simple Expression: " + se);
+      Log.d(LOG_TAG, "Invalid or incomplete Simple Expression: " + se);
       return false;
     }
 
-  public Predicate<Game> addPredicate(Predicate<Game> predicate, String op, String expr)  {
+  public Predicate<Game> addPredicate(Predicate<Game> predicate, String op, String expr)
+  throws InvalidLifeException{
     if (op.equals(AND)) {
       return predicate.and(parseSimple(expr));
     } else if (op.equals(OR)) {
@@ -293,26 +309,31 @@ public class ExpressionParser {
     
   }
   
-    public Predicate<Game> parse(String exprString) {
-      Predicate<Game> predicate = g -> true;
-      String[] expressions = exprString.split(" ");
-      StringBuilder sb = new StringBuilder();
-      String savedOp = AND;
-      for (String e : expressions) {
-        Log.i(LOG_TAG, "Parsing: " + e);
-        if (logicalOperators.contains(e)) {
-          predicate = addPredicate(predicate, savedOp, sb.toString());
-          savedOp = e;
-          sb = new StringBuilder();
-        } else {
-          sb.append(" " + e);
-        }
+  public Predicate<Game> parse(String exprString) throws InvalidLifeException{
+    Predicate<Game> predicate = g -> true;
+    String[] expressions = exprString.split(" ");
+    StringBuilder sb = new StringBuilder();
+    String savedOp = AND;
+    for (String e : expressions) {
+      Log.i(LOG_TAG, "Parsing: " + e);
+      if (logicalOperators.contains(e)) {
+        predicate = addPredicate(predicate, savedOp, sb.toString());
+        savedOp = e;
+        sb = new StringBuilder();
+      } else {
+        sb.append(" " + e);
       }
-      predicate = addPredicate(predicate, savedOp, sb.toString());
-      return predicate;
     }
+    String expr = sb.toString();
+    if (! expr.equals("")) {
+      predicate = addPredicate(predicate, savedOp, expr);
+    } else {
+      throw new InvalidLifeException("Could not parse expression: \"" + exprString + "\"");
+    }
+    return predicate;
+  }
   
-    public Predicate<Game> parseSimple(String exprString) {
+    public Predicate<Game> parseSimple(String exprString) throws InvalidLifeException {
 
       String[] expressions = exprString.split(" ");
       List<String> simpleExpression;
@@ -363,7 +384,12 @@ public class ExpressionParser {
         Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
         return createPredicate(se);
       }
-      return null;
+      if (logicalOperator==null || (logicalOperator.equals("")) ) {
+        throw new InvalidLifeException("Failed parsing expression: \"" + exprString + "\"");
+      } else {
+        throw new InvalidLifeException("Failed parsing expression: \"" + exprString + "\" (current logical operator: " + logicalOperator + ")");
+      }        
+        
     }
 
 }

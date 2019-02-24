@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Game {
 
@@ -15,11 +16,13 @@ public class Game {
     private int situationCount;
     private int score;
     private Map<ThingAction, Integer> things;
+  private Set<String> thingsNeeded;
 
     private static final String LOG_TAG = Game.class.getSimpleName();  
   
     public Game(String title, Map<String, Situation> situations,
-                Situation startSitution, Map<ThingAction, Integer> things) {
+                Situation startSitution, Map<ThingAction, Integer> things,
+                Set<String> thingsNeeded) {
         this.title = title;
         this.situations = situations;
         situations.put("End of game", Situation.endSituation);
@@ -29,6 +32,7 @@ public class Game {
         if (things == null) {
             this.things = new HashMap<>();
         }
+        this.thingsNeeded = thingsNeeded;
     }
 
     public Situation getSituation(String title) {
@@ -93,6 +97,11 @@ public class Game {
             }
         }
   }
+
+  public Set<String> thingsNeeded() {
+    return thingsNeeded;
+  }
+  
 
     @Override
     public String toString() {

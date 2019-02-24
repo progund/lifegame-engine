@@ -10,122 +10,111 @@ import java.util.Map;
 
 public class LifeGameEngine {
 
-    private static final String LOG_TAG = LifeGameEngine.class.getSimpleName();
-    private Game game;
-    private Situation current;
+  private static final String LOG_TAG = LifeGameEngine.class.getSimpleName();
+  private Game game;
+  private Situation current;
 
-    public LifeGameEngine(String file) {
-        JParser jParser = new JParser();
-        this.game = jParser.game(file);
-        current = game.startSitution();
-    }
+  public final static String WIN_SITUATION = "End of game";
+  
+  public LifeGameEngine(String file) throws InvalidLifeException {
+    JParser jParser = new JParser();
+    this.game = jParser.game(file);
+    current = game.startSitution();
+  }
 
-    public Situation getSituation(String title) {
-        return game.getSituation(title);
-    }
+  public Situation getSituation(String title) {
+    return game.getSituation(title);
+  }
 
-    public Situation situation() {
-        return current;
-    }
-
-
-    public boolean gameOver() {
-        return current.title().equals("End of game");
-    }
+  public Situation situation() {
+    return current;
+  }
 
 
-    public boolean gameOver(Situation situation) {
-        return situation.title().equals("End of game");
-    }
+  public boolean gameOver() {
+    return current.title().equals(WIN_SITUATION);
+  }
 
 
-    public Situation handleExit(String answer) {
-      game.incSituationCount();
+  public boolean gameOver(Situation situation) {
+    return situation.title().equals(WIN_SITUATION);
+  }
 
-        Log.i(LOG_TAG, "handleExit(" + answer + ") ");
-        for (Suggestion suggestion : current.suggestions()) {
-            Log.i(LOG_TAG, "handleExit(" + answer + "):   " + suggestion);
 
-            if (answer.equals(suggestion.phrase())) {
-                Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " found");
+  public Situation handleExit(String answer) {
+    game.incSituationCount();
 
-                for (Exit e : suggestion.exits()) {
-                    Log.i(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
-                    Log.i(LOG_TAG,"handleExit:    situation count: " + situationCount());
-                    if (e.isTrue(game)) {
-                        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
-                        String title = e.exit();
-                        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e + "  title: " + title + " RETURNING");
+    Log.d(LOG_TAG, "handleExit(" + answer + ") ");
+    for (Suggestion suggestion : current.suggestions()) {
+      Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion);
+
+      if (answer.equals(suggestion.phrase())) {
+        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " found");
+
+        game.incScore(suggestion.score());
+
+        for (Exit e : suggestion.exits()) {
+          Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
+          Log.d(LOG_TAG,"handleExit:    situation count: " + situationCount());
+          if (e.isTrue(game)) {
+
+
+            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
+            String title = e.exit();
+            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e + "  title: " + title + " RETURNING");
                         
-                        // Change situation
+            // Change situation
 
-                        Situation savedCurrent = current;
-                        current = game.getSituation(title);
-                        if (current!=null) {
-                          Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current.title());
-                        } else {
-                          Log.e(LOG_TAG, "current is null from: " + title);
-                        }
-                        //                        Log.i(LOG_TAG, " current: " + current);
-
-                        /************************************************************
-                         * Leave this to the ui instead 
-                        List<ThingAction> actions = current.actions();
-                        Iterator<ThingAction> iter = actions.iterator();
-
-                        // TODO: why does this NOT work without the size check?
-                        while (actions.size() > 0 && iter.hasNext()) {
-                            ThingAction action = iter.next();
-                            game.addThing(action);
-                            actions.remove(action);
-                            Log.i(LOG_TAG, "  Things:"           + game.things() + " / " + actions);
-                        }
-                        ****************************************************************/
-
-                        
-                        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current);
-                        if (current.title().equals("End of game")) {
-                            Log.d(LOG_TAG, "You win!!");
-                            current = Situation.endSituation;
-                        }
-                        return current;
-                    }
-                }
-                Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " handled");
+            Situation savedCurrent = current;
+            current = game.getSituation(title);
+            if (current!=null) {
+              Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current.title());
+            } else {
+              Log.e(LOG_TAG, "current is null from: " + title);
             }
-
+            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current);
+            if (current.title().equals(WIN_SITUATION)) {
+              Log.d(LOG_TAG, "You win!!");
+              current = Situation.endSituation;
+            }
+            return current;
+          }
         }
-        if (current.title().equals("End of game")) {
-            Log.d(LOG_TAG, "You win!!");
-            current = Situation.endSituation;
-        }
-        Log.e(LOG_TAG, "Odd, we seem to have gotten an answer not suggested");
-        return null;
-    }
+        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " handled");
+      }
 
-    public int situationCount() {
-        return game.situationCount();
     }
+    if (current.title().equals(WIN_SITUATION)) {
+      Log.d(LOG_TAG, "You win!!");
+      current = Situation.endSituation;
+    }
+    Log.e(LOG_TAG, "Odd, we seem to have gotten an answer not suggested");
+    return null;
+  }
 
-    public int score() {
-        return game.score();
-    }
+  public int situationCount() {
+    return game.situationCount();
+  }
 
-    public void incScore(int amount) {
-        game.incScore(amount);
-    }
+  public int score() {
+    return game.score();
+  }
 
-    public void decScore(int amount) {
-        game.decScore(amount);
-    }
+  public void incScore(int amount) {
+    game.incScore(amount);
+  }
+
+  public void decScore(int amount) {
+    game.decScore(amount);
+  }
 
   public Map<ThingAction, Integer> things() {
-      return game.things();
-    }
+    return game.things();
+  }
 
-    public Game game() {
-        return game;
-    }
+  public Game game() {
+    return game;
+  }
 
   public void removeActionThing(ThingAction action) {
     game.dropThing(action);

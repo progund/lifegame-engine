@@ -6,6 +6,7 @@ import se.juneday.lifegame.domain.Situation;
 import se.juneday.lifegame.domain.Suggestion;
 import se.juneday.lifegame.domain.ThingAction;
 import se.juneday.lifegame.engine.LifeGameEngine;
+import se.juneday.lifegame.domain.InvalidLifeException;
 import se.juneday.lifegame.json.JParser;
 import se.juneday.lifegame.util.Log;
 
@@ -22,6 +23,7 @@ public class LifeVerifier {
   private boolean throwExceptions;
   private int failures;
   private Set<String> missingSituations;
+  private Set<String> missingThings;
   
   public void verifySuggestion(Suggestion suggestion) throws LifeVerifierException {
     for (Exit e : suggestion.exits()) {
@@ -46,7 +48,8 @@ public class LifeVerifier {
     }
   }
 
-  public void verifySituations(Game game) throws LifeVerifierException {
+  public void verifySituations() throws LifeVerifierException {
+    Game game = engine.game();
     for (Map.Entry<String, Situation> s : game.situations().entrySet()) {
       Log.i(LOG_TAG, "  ---------------------- verifying situation: " + s.getValue().title());
       if (engine.gameOver(s.getValue())) {
@@ -59,20 +62,47 @@ public class LifeVerifier {
   }
 
   public void verify() throws LifeVerifierException {
-    verifySituations(engine.game());
+    verifySituations();
+    verifyThings();
   }
 
   public int failures() {
     return failures;
   }
   
-  public LifeVerifier(String file) {
+  public LifeVerifier(String file) throws InvalidLifeException {
     engine = new LifeGameEngine(file);
     missingSituations = new HashSet<>();
+    missingThings = new HashSet<>();
   } 
 
   public Set<String> missingSituations() {
     return missingSituations;    
+  }
+
+  public Set<String> missingThings() {
+    return missingThings;
+  }
+  
+  public void verifyThing(String thing) {
+    for (Situation situation : engine.game().situations().values()) {
+      for (ThingAction thingAction : situation.actions()) {
+        if (thing.equals(thingAction.thing())) {
+          Log.i(LOG_TAG, "  + verifying thing ---  " + thing + ": Ok");
+          return ;
+        }
+      }
+    }
+    missingThings.add(thing);
+    failures++;
+    Log.i(LOG_TAG, "  + verifying thing ---  " + thing + ": Failed");
+  }
+  
+  public void verifyThings() {
+    for (String thing : engine.game().thingsNeeded()) {
+      Log.i(LOG_TAG, "  + verifying thing " + thing);
+      verifyThing(thing);
+    }
   }
   
   public static void main(String[] args) {
@@ -86,15 +116,17 @@ public class LifeVerifier {
     }
 
     
-    Log.logLevel(Log.LogLevel.INFO);
-    LifeVerifier verifier = new LifeVerifier(fileName);
-
     try { 
+      LifeVerifier verifier = new LifeVerifier(fileName);
+
       verifier.verify();
-      System.out.println(verifier.failures() + " failures");
-      System.out.println("Missing situations: " + verifier.missingSituations());
-    } catch (LifeVerifierException e) {
+      System.out.println("Verification report");
+      System.out.println(" * Failures: " + verifier.failures());
+      System.out.println(" * Missing situations: " + verifier.missingSituations());
+      System.out.println(" * Missing things:     " + verifier.missingThings());
+    } catch (LifeVerifierException | InvalidLifeException e) {
       e.printStackTrace();
+      System.out.println(e.getMessage());
     }
     
   }

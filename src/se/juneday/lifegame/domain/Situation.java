@@ -1,6 +1,7 @@
 package se.juneday.lifegame.domain;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Situation {
 
@@ -19,6 +20,9 @@ public class Situation {
         this.question = question;
         this.suggestions = suggestions;
         this.actions = actions;
+        if (actions==null) {
+          this.actions = new ArrayList<>();
+        }
     }
 
     public String title() {

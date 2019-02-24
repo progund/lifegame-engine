@@ -11,9 +11,9 @@ public class Exit {
     private Predicate<Game> predicate;
     private String exitSituation;
 
-    public Exit(Predicate<Game> predicate, String exitSituation) {
-        this.predicate = predicate;
-        this.exitSituation = exitSituation;
+  public Exit(Predicate<Game> predicate, String exitSituation) {
+    this.predicate = predicate;
+    this.exitSituation = exitSituation;
     }
 
     public String exit() {
@@ -21,9 +21,8 @@ public class Exit {
     }
 
   
-  
     public Boolean isTrue(Game game) {
-        Log.i(LOG_TAG, "isTrue(): " + predicate + "  ===> " + predicate.test(game) + "   exit situation" + exitSituation );
+        Log.d(LOG_TAG, "isTrue(): " + predicate + "  ===> " + predicate.test(game) + "   exit situation" + exitSituation );
         return predicate.test(game);
     }
 

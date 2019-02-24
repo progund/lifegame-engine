@@ -1,6 +1,7 @@
 package se.juneday.lifegame.test;
 
 import se.juneday.lifegame.domain.Game;
+import se.juneday.lifegame.domain.InvalidLifeException;
 import se.juneday.lifegame.engine.LifeGameEngine;
 import se.juneday.lifegame.json.ExpressionParser;
 import se.juneday.lifegame.json.JParser;
@@ -14,8 +15,16 @@ public class TestExpressionParser {
 
     public static void main(String[] args) {
 
-        LifeGameEngine lengine = new LifeGameEngine("data/univ.json");
+      LifeGameEngine lengine;
+      try { 
+        lengine = new LifeGameEngine("data/univ.json");
         System.out.println();
+      } catch (InvalidLifeException e) {
+        System.out.println("\n\n\n ---=== FAILURE ===---\n");
+        System.out.println(e.getCause());
+        System.exit(1);
+        return;
+      }
 
 
         System.out.println("You're in: " + lengine.situation().title());

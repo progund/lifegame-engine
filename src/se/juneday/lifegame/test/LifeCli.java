@@ -1,6 +1,7 @@
 package se.juneday.lifegame.test;
 
 import se.juneday.lifegame.domain.Exit;
+import se.juneday.lifegame.domain.InvalidLifeException;
 import se.juneday.lifegame.domain.Situation;
 import se.juneday.lifegame.domain.Suggestion;
 import se.juneday.lifegame.domain.ThingAction;
@@ -35,12 +36,19 @@ public class LifeCli {
       Log.logLevel(Log.LogLevel.INFO);
         // Log.includeTag("LifeGame");
       LifeGameEngine engine;
-      if ( args.length > 0 ) {
-        println("Opening: " + args[0]);
-        engine = new LifeGameEngine(args[0]);
-      } else {
-        println("Opening: " + "data/univ.json");
-        engine = new LifeGameEngine("data/univ.json");
+      String file = "";
+      try { 
+        if ( args.length > 0 ) {
+          file = args[0];
+        } else {
+          file = "data/univ-swe.json";
+        }
+        engine = new LifeGameEngine(file);
+      } catch (InvalidLifeException e) {
+        println("\n\n\n ---=== FAILURE ===---\n");
+        println("Could not even parse life in: " + file);
+        System.exit(1);
+        return;
       }
 
         Situation here = engine.situation();
@@ -55,8 +63,6 @@ public class LifeCli {
             Log.i(LOG_TAG, "  Situation count:    " + engine.situationCount());
             Log.i(LOG_TAG, "  Things in the room: " + engine.situation().actions());
             Log.i(LOG_TAG, "  Things in your bag: " + engine.things());
-            println("You're in: " + here.title());
-            println("n");
             println(here.question());
             int idx=0;
             for (Suggestion s : here.suggestions()) {
@@ -72,22 +78,23 @@ public class LifeCli {
                 println("  " + idx++ + ". take " + ta);
             }
             
-            print("What index do you want to go for?: ");
+            print("What's next?  ");
             String input = read();
             int menuIndex = 0 ;
             try {
                 menuIndex = Integer.parseInt(input);
-                System.out.println(" choice: " + menuIndex);
+                System.out.println("Your choice: " + menuIndex);
 
-                println("Test " + here.suggestions().size() + "  " + engine.things().entrySet().size());
+                //                println("Test " + here.suggestions().size() + "  " + engine.things().entrySet().size());
 
                 if (menuIndex < here.suggestions().size()) {
                   String phrase = here.suggestions().get(menuIndex).phrase();
-                  Log.i(LOG_TAG, "You said: " + input + " => " + menuIndex + " => " + phrase );
+                  Log.d(LOG_TAG, "You said: " + input + " => " + menuIndex + " => " + phrase );
                   engine.handleExit(phrase);
                   here = engine.situation();
                 } else if ( menuIndex < (here.suggestions().size() + engine.things().entrySet().size())) {
                   int dropIndex = menuIndex - here.suggestions().size() ;
+                  Log.i(LOG_TAG, "Drop from user: index:   " + dropIndex);
                   Log.i(LOG_TAG, "Drop from user: index:   " + dropIndex);
                   Log.i(LOG_TAG, "Drop from user: actions: " + engine.situation().actions().size());
                   Log.i(LOG_TAG, "Drop from user: actions: " + engine.situation().actions());

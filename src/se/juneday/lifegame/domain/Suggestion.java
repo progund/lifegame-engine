@@ -4,27 +4,38 @@ import java.util.List;
 
 public class Suggestion {
 
-    private String phrase;
-    private List<Exit> exits;
+  private String phrase;
+  private List<Exit> exits;
+  private int score;
 
-    public Suggestion(String phrase, List<Exit> exits) {
-        this.phrase = phrase;
-        this.exits = exits;
-    }
+  public Suggestion(String phrase, List<Exit> exits, int score) {
+    this.phrase = phrase;
+    this.exits = exits;
+    this.score = score;
+  }
 
-    public String phrase() {
-        return phrase;
-    }
+  public Suggestion(String phrase, List<Exit> exits) {
+    this.phrase = phrase;
+    this.exits = exits;
+  }
 
-    public List<Exit> exits() {
-        return exits;
-    }
+  public String phrase() {
+    return phrase;
+  }
 
-    @Override
-    public String toString() {
-        return "Suggestion{" +
-                "phrase='" + phrase + '\'' +
-                ", exits=" + exits +
-                '}';
-    }
+  public List<Exit> exits() {
+    return exits;
+  }
+
+  public int score() {
+    return score;
+  }
+
+  @Override
+  public String toString() {
+    return "Suggestion{" +
+      "phrase='" + phrase + '\'' +
+      ", exits=" + exits +
+      '}';
+  }
 }
