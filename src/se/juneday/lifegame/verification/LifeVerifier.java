@@ -118,12 +118,12 @@ public class LifeVerifier {
     
     try { 
       LifeVerifier verifier = new LifeVerifier(fileName);
-
       verifier.verify();
       System.out.println("Verification report");
       System.out.println(" * Failures: " + verifier.failures());
       System.out.println(" * Missing situations: " + verifier.missingSituations());
       System.out.println(" * Missing things:     " + verifier.missingThings());
+      System.out.println(" * Situations:         " + verifier.engine.game().situations().values().size());
     } catch (LifeVerifierException | InvalidLifeException e) {
       e.printStackTrace();
       System.out.println(e.getMessage());

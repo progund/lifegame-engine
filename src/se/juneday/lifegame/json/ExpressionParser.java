@@ -311,6 +311,9 @@ public class ExpressionParser {
   
   public Predicate<Game> parse(String exprString) throws InvalidLifeException{
     Predicate<Game> predicate = g -> true;
+    if (exprString.trim().equals("default")) {
+      return predicate;
+    }
     String[] expressions = exprString.split(" ");
     StringBuilder sb = new StringBuilder();
     String savedOp = AND;

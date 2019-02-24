@@ -28,8 +28,11 @@ cli: $(JAVA_CLASSES)
 swe: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
 
-swe-test: $(JAVA_CLASSES)
+swe-test1: $(JAVA_CLASSES)
 	printf "2\n0\n1\n3\n0\n1\n0\n1\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
+
+swe-test: $(JAVA_CLASSES)
+	printf "2\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
 
 verify: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(VERIFY) data/univ-swe.json

@@ -137,14 +137,16 @@ public class JParser {
 
           // for each exits
           for (int k = 0; k < exitsJsonArray.length(); k++) {
-            JSONObject exitObject = exitsJsonArray.getJSONObject(j);
+            JSONObject exitObject = exitsJsonArray.getJSONObject(k);
+            System.out.println("Adding expr: " + expr + " | " + k  + " | from " + exitObject + "  exit: " + exitsJsonArray);
 
             // expression to get to next situation
             expr = exitObject.getString(SITUATION_SUGGESTION_EXITS_EXPR);
             // next situation
             String exit = exitObject.getString(SITUATION_SUGGESTION_EXITS_SITUATION);
-
-            exitList.add(new Exit(ep.parse(expr), exit));
+            String explanation = readJsonString(exitObject, "explanation", null);
+            
+            exitList.add(new Exit(ep.parse(expr), exit, explanation));
           }
         }
         Suggestion suggestion = new Suggestion(phrase, exitList, situationScore);

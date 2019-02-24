@@ -13,7 +13,8 @@ public class LifeGameEngine {
   private static final String LOG_TAG = LifeGameEngine.class.getSimpleName();
   private Game game;
   private Situation current;
-
+  private String latestExplanation;
+  
   public final static String WIN_SITUATION = "End of game";
   
   public LifeGameEngine(String file) throws InvalidLifeException {
@@ -41,6 +42,10 @@ public class LifeGameEngine {
   }
 
 
+  public String explanation() {
+    return latestExplanation;
+  }
+  
   public Situation handleExit(String answer) {
     game.incSituationCount();
 
@@ -58,10 +63,12 @@ public class LifeGameEngine {
           Log.d(LOG_TAG,"handleExit:    situation count: " + situationCount());
           if (e.isTrue(game)) {
 
-
             Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
             String title = e.exit();
             Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e + "  title: " + title + " RETURNING");
+
+            latestExplanation = e.explanation();
+            
                         
             // Change situation
 
