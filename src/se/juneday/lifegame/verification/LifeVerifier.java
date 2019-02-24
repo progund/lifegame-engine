@@ -21,7 +21,7 @@ public class LifeVerifier {
   private LifeGameEngine engine;
   private boolean throwExceptions;
   private int failures;
-  private Set<String> missingRooms;
+  private Set<String> missingSituations;
   
   public void verifySuggestion(Suggestion suggestion) throws LifeVerifierException {
     for (Exit e : suggestion.exits()) {
@@ -31,7 +31,7 @@ public class LifeVerifier {
           throw new LifeVerifierException ("Could not find exit \"" + e.exit() + "\"");
         } else {
           Log.i(LOG_TAG, "      + verifying exit: " + e.exit() + ":  Failed");
-          missingRooms.add(e.exit());
+          missingSituations.add(e.exit());
         }
       } else {
         Log.i(LOG_TAG, "      + verifying exit: " + e.exit() + ":  Ok");
@@ -68,11 +68,11 @@ public class LifeVerifier {
   
   public LifeVerifier(String file) {
     engine = new LifeGameEngine(file);
-    missingRooms = new HashSet<>();
+    missingSituations = new HashSet<>();
   } 
 
-  public Set<String> missingRooms() {
-    return missingRooms;    
+  public Set<String> missingSituations() {
+    return missingSituations;    
   }
   
   public static void main(String[] args) {
@@ -92,7 +92,7 @@ public class LifeVerifier {
     try { 
       verifier.verify();
       System.out.println(verifier.failures() + " failures");
-      System.out.println(verifier.missingRooms());
+      System.out.println("Missing situations: " + verifier.missingSituations());
     } catch (LifeVerifierException e) {
       e.printStackTrace();
     }
