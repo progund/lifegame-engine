@@ -1,4 +1,5 @@
 LIFE_CLI=se.juneday.lifegame.test.LifeCli
+VERIFY=se.juneday.lifegame.verification.LifeVerifier
 CLASSPATH=.:src:lib/org.json.jar
 
 %.class:%.java
@@ -10,6 +11,7 @@ JAVA_FILES= \
   src/se/juneday/lifegame/json/JParser.java \
   src/se/juneday/lifegame/util/Log.java \
   src/se/juneday/lifegame/engine/LifeGameEngine.java \
+  src/se/juneday/lifegame/verification/LifeVerifier.java \
   src/se/juneday/lifegame/test/LifeCli.java \
   src/se/juneday/lifegame/test/TestParser.java \
   src/se/juneday/lifegame/test/TestExpressionParser.java
@@ -22,6 +24,12 @@ $(BIN_DIR):
 
 cli: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI)
+
+swe: $(JAVA_CLASSES)
+	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
+
+verify: $(JAVA_CLASSES)
+	java -cp $(CLASSPATH) $(VERIFY) data/univ-swe.json
 
 autocli: $(JAVA_CLASSES)
 	printf "0\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI)

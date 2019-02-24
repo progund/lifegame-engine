@@ -189,6 +189,11 @@ public class ExpressionParser {
   }
 
 
+  private  Predicate<Game>  createHasPredicate(SimpleExpr se) {
+    // TODO: properly implement the below
+    return g -> { for (ThingAction a : g.things().keySet()) { if ( a.thing().equals(se.op2)) { return true;} } ; return false; } ;
+  }
+  
   private  Predicate<Game>  createSituationsPredicate(SimpleExpr se) {
     switch (se.expr) {
     case GT:
@@ -204,11 +209,20 @@ public class ExpressionParser {
     }
   }
 
+
+  
     private Predicate<Game> createPredicate(SimpleExpr se) {
         if (!validateSimpleExpr(se)) {
             // TODO: throw exception
             Log.d(LOG_TAG,"ERROR in expression: " + se);
             return null;
+        }
+
+        Log.i(LOG_TAG,"Create predicate from: " + se);
+
+        switch (se.expr) {
+        case HAS:
+          return createHasPredicate(se);
         }
 
         switch (se.op1) {
@@ -249,15 +263,22 @@ public class ExpressionParser {
     }
   */
 
+    private boolean validateHasExpression(SimpleExpr se) {
+      return (se.op1 == null) && (HAS.equals(se.expr)) && (se.op2!=null);
+    }
   
     private boolean validateSimpleExpr(SimpleExpr se) {
-        if ((isNumeric(se.op1) && gameExpressions.contains(se.op2)) ||
-                (isNumeric(se.op2) && gameExpressions.contains(se.op1))) {
-            if (compareOperators.contains(se.expr)) {
-                return true;
-            }
+      if ((isNumeric(se.op1) && gameExpressions.contains(se.op2)) ||
+          (isNumeric(se.op2) && gameExpressions.contains(se.op1))) {
+        if (compareOperators.contains(se.expr)) {
+          return true;
         }
-        return false;
+      }
+      if (validateHasExpression(se)) {
+        return true;
+      }
+      Log.e(LOG_TAG, "Invalid Simple Expression: " + se);
+      return false;
     }
 
   public Predicate<Game> addPredicate(Predicate<Game> predicate, String op, String expr)  {
@@ -278,6 +299,7 @@ public class ExpressionParser {
       StringBuilder sb = new StringBuilder();
       String savedOp = AND;
       for (String e : expressions) {
+        Log.i(LOG_TAG, "Parsing: " + e);
         if (logicalOperators.contains(e)) {
           predicate = addPredicate(predicate, savedOp, sb.toString());
           savedOp = e;
@@ -315,6 +337,8 @@ public class ExpressionParser {
           } else {
             se.expr = e;
           }
+        } else if (HAS.equals(e)) {
+          se.expr = e;
         } else if (gameExpressions.contains(e)) {
           Log.d(LOG_TAG," * game expr: " + e);
           if (se.op1 != null) {
@@ -330,7 +354,9 @@ public class ExpressionParser {
             se.op1 = e;
           }
         } else {
-          Log.d(LOG_TAG," * UNKNOWN: \"" + e + "\"");
+          // Assume HAS
+          se.op1 = null;
+          se.op2 = e;
         }
       }
       if (validateSimpleExpr(se)) {

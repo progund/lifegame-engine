@@ -16,7 +16,7 @@ public class LifeGameEngine {
 
     public LifeGameEngine(String file) {
         JParser jParser = new JParser();
-        this.game = jParser.game("data/univ.json");
+        this.game = jParser.game(file);
         current = game.startSitution();
     }
 
@@ -34,55 +34,56 @@ public class LifeGameEngine {
     }
 
 
+    public boolean gameOver(Situation situation) {
+        return situation.title().equals("End of game");
+    }
+
+
     public Situation handleExit(String answer) {
       game.incSituationCount();
 
-        Log.d(LOG_TAG, "handleExit(" + answer + ") ");
+        Log.i(LOG_TAG, "handleExit(" + answer + ") ");
         for (Suggestion suggestion : current.suggestions()) {
-            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion);
+            Log.i(LOG_TAG, "handleExit(" + answer + "):   " + suggestion);
+
             if (answer.equals(suggestion.phrase())) {
                 Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " found");
+
                 for (Exit e : suggestion.exits()) {
-                    Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
-                    Log.d(LOG_TAG,"handleExit:    situation count: " + situationCount());
+                    Log.i(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
+                    Log.i(LOG_TAG,"handleExit:    situation count: " + situationCount());
                     if (e.isTrue(game)) {
                         Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
                         String title = e.exit();
                         Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e + "  title: " + title + " RETURNING");
-
+                        
                         // Change situation
-                        current = game.getSituation(title);
-                        Log.i(LOG_TAG, " current: " + current);
 
+                        Situation savedCurrent = current;
+                        current = game.getSituation(title);
+                        if (current!=null) {
+                          Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current.title());
+                        } else {
+                          Log.e(LOG_TAG, "current is null from: " + title);
+                        }
+                        //                        Log.i(LOG_TAG, " current: " + current);
+
+                        /************************************************************
+                         * Leave this to the ui instead 
                         List<ThingAction> actions = current.actions();
                         Iterator<ThingAction> iter = actions.iterator();
+
                         // TODO: why does this NOT work without the size check?
                         while (actions.size() > 0 && iter.hasNext()) {
                             ThingAction action = iter.next();
-                            Log.i(LOG_TAG, " * action: " + action);
-/*                            switch (action.action()) {
-                                case TAKE:
-                                */
-                            Log.i(LOG_TAG, "  Things:"           + game.things() + " / " + actions);
-
-    //                        Log.i(LOG_TAG, " * TAKE:   " + action.thing() +  "   action size: " + actions.size() + " " + iter.hasNext());
                             game.addThing(action);
-  //                          Log.i(LOG_TAG, " * REMOVE: " + action.thing() +  "   action size: " + actions.size() + " " + iter.hasNext());
                             actions.remove(action);
-//                            Log.i(LOG_TAG, " * AFTER:  " + action.thing() +  "   action size: " + actions.size() + " " + iter.hasNext());
                             Log.i(LOG_TAG, "  Things:"           + game.things() + " / " + actions);
-/*                                    break;
-                                case DROP:
-                                    Log.i(LOG_TAG," * DROP: " + action.thing());
-                                    game.dropThing(action.thing());
-                                    current.actions().add(action);
-                                    break;
                         }
-                                   */
-                        }
+                        ****************************************************************/
 
+                        
                         Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current);
-                        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current.title());
                         if (current.title().equals("End of game")) {
                             Log.d(LOG_TAG, "You win!!");
                             current = Situation.endSituation;
@@ -94,9 +95,7 @@ public class LifeGameEngine {
             }
 
         }
-        if (current.title().
-
-                equals("End of game")) {
+        if (current.title().equals("End of game")) {
             Log.d(LOG_TAG, "You win!!");
             current = Situation.endSituation;
         }
@@ -120,15 +119,29 @@ public class LifeGameEngine {
         game.decScore(amount);
     }
 
-    public Map<String, Integer> things() {
-        return game.things();
+  public Map<ThingAction, Integer> things() {
+      return game.things();
     }
 
-    @Override
-    public String toString() {
-        return "LifeGameEngine{" +
-                "game=" + game +
-                ", current=" + current +
-                '}';
+    public Game game() {
+        return game;
     }
+
+  public void removeActionThing(ThingAction action) {
+    game.dropThing(action);
+    current.addActionThing(action);
+  }
+  
+  public void addActionThing(ThingAction ta) {
+    game.addThing(ta);
+    current.removeActionThing(ta);
+  }
+
+  @Override
+  public String toString() {
+    return "LifeGameEngine{" +
+      "game=" + game +
+      ", current=" + current +
+      '}';
+  }
 }

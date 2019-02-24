@@ -20,6 +20,8 @@ public class Exit {
         return exitSituation;
     }
 
+  
+  
     public Boolean isTrue(Game game) {
         Log.i(LOG_TAG, "isTrue(): " + predicate + "  ===> " + predicate.test(game) + "   exit situation" + exitSituation );
         return predicate.test(game);
@@ -33,4 +35,5 @@ public class Exit {
                 ", exitSituation='" + exitSituation + '\'' +
                 '}';
     }
+
 }

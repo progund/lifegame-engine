@@ -10,8 +10,6 @@ public class Situation {
   private List<Suggestion> suggestions;
   private List<ThingAction> actions ;
 
-  
-
     
     public static Situation endSituation = new Situation("End of game", "Your life is complete, you've made it.", null, null, null);
 
@@ -42,16 +40,18 @@ public class Situation {
     public List<ThingAction> actions() {
         return actions;
     }
-/*
-    public void removeActionThing(ThingAction t) {
-        actions.remove(t);
-    }
 
-    public void addActionThing(ThingAction t) {
+  public void removeActionThing(ThingAction t) {
+    System.out.println("actions: " + actions);
+    actions.remove(t);
+    System.out.println("actions: " + actions);
+  }
+
+  public void addActionThing(ThingAction t) {
+    System.out.println("add actions: " + actions);
         actions.add(t);
+    System.out.println("add actions: " + actions);
     }
-*/
-
 
     @Override
     public String toString() {

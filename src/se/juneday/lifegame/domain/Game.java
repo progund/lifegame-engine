@@ -14,10 +14,12 @@ public class Game {
     private Map<String, Situation> situations;
     private int situationCount;
     private int score;
-    private Map<String, Integer> things;
+    private Map<ThingAction, Integer> things;
 
+    private static final String LOG_TAG = Game.class.getSimpleName();  
+  
     public Game(String title, Map<String, Situation> situations,
-                Situation startSitution, Map<String, Integer> things) {
+                Situation startSitution, Map<ThingAction, Integer> things) {
         this.title = title;
         this.situations = situations;
         situations.put("End of game", Situation.endSituation);
@@ -31,6 +33,10 @@ public class Game {
 
     public Situation getSituation(String title) {
         return situations.get(title);
+    }
+
+    public Map<String, Situation> situations() {
+        return situations;
     }
 
     public Situation startSitution() {
@@ -57,29 +63,36 @@ public class Game {
         return score -= amount;
     }
 
-    public Map<String, Integer> things() {
+    public Map<ThingAction, Integer> things() {
         return things;
     }
 
     public void addThing(ThingAction thing) {
-        Integer count = things.get(thing.thing());
+        Integer count = things.get(thing);
         if (count == null) {
-            things.put(thing.thing(), 1);
+          Log.i(LOG_TAG, "  Things, adding first " + thing);
+          things.put(thing, 1);
         } else {
-            things.put(thing.thing(), count + 1);
+          Log.i(LOG_TAG, "  Things, adding one more " + thing);
+          things.put(thing, count + 1);
         }
     }
 
-    public void dropThing(String thing) {
+  /*  public void dropThing(ThingAction ta) {
+      dropThing(ta);
+    }
+  */
+  
+  public void dropThing(ThingAction thing) {
         Integer count = things.get(thing);
         if (count != null) {
             if (count == 1) {
                 things.remove(thing);
             } else if (count > 0) {
-                things.put(thing, count - 1);
+              things.put(thing, count - 1);
             }
         }
-    }
+  }
 
     @Override
     public String toString() {

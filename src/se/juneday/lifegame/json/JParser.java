@@ -75,10 +75,10 @@ public class JParser {
                 JSONArray thingsJsonArray = jsonSituation.getJSONArray(SITUATION_THINGS);
                 for (int k = 0; k < thingsJsonArray.length(); k++) {
                     JSONObject thingJson = thingsJsonArray.getJSONObject(k);
-                    String action = thingJson.getString(SITUATION_THINGS_ACTION);
+                    //                    String action = thingJson.getString(SITUATION_THINGS_ACTION);
                     String thing = thingJson.getString(SITUATION_THINGS_THING);
                     actionList.add(new ThingAction(thing));
-                    System.out.println(" ADDED THING: " + action + " " + thing + "  in " + title);
+                    System.out.println(" ADDED THING: "  + " " + thing + "  in " + title);
                 }
             } catch (JSONException e) {
                 Log.d(LOG_TAG, "no things in " + title);
