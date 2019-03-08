@@ -113,13 +113,49 @@ public class ExpressionParser {
     }
   }
   
+  private  Predicate<Game> createPointsLTPredicate(SimpleExpr se) {
+    switch (se.op2) {
+    case SCORE:
+      return g -> g.score() < g.score();
+    case SITUATIONS:
+      return g -> g.score() < g.situationCount();
+    default:
+      return g -> g.score() < Integer.parseInt(se.op2);
+    }
+  }
+  
+  private  Predicate<Game> createPointsEQPredicate(SimpleExpr se) {
+    switch (se.op2) {
+    case SCORE:
+      return g -> g.score() == g.score();
+    case SITUATIONS:
+      return g -> g.score() == g.situationCount();
+    default:
+      return g -> g.score() == Integer.parseInt(se.op2);
+    }
+  }
+  
+  private  Predicate<Game> createPointsNEPredicate(SimpleExpr se) {
+    switch (se.op2) {
+    case SCORE:
+      return g -> g.score() != g.score();
+    case SITUATIONS:
+      return g -> g.score() != g.situationCount();
+    default:
+      return g -> g.score() != Integer.parseInt(se.op2);
+    }
+  }
+  
   private  Predicate<Game> createPointsPredicate(SimpleExpr se) {
     switch (se.expr) {
     case GT:
       return createPointsGTPredicate(se);
     case LT:
+      return createPointsLTPredicate(se);
     case EQ:
+      return createPointsEQPredicate(se);
     case NE:
+      return createPointsNEPredicate(se);
     default:
       return null;
     }
