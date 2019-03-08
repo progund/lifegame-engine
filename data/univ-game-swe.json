@@ -1,0 +1,36 @@
+{
+    "title": "Universitetsspelet - Nå Nirvana i akademin",
+    "start": "Entren",
+    "situations": [
+        {
+            "title": "Entren",
+            "description": "Du befinner dig i ingången till universitetet",
+            "question":"Vad gör du?",
+            "things": [
+                { "thing": "penna" }
+            ],
+            "suggestions": [
+                { "phrase": "Går in",
+                  "exits": [
+                      { "expr":" score < 10", "situation": "Föreläsning om hippologi", "explanation": "Du har redan tillräcklig erfarenhet."},
+                      { "expr":"default", "situation": "Studentrummet"}
+                  ]
+                },
+                { "phrase": "Vänder om och går ut", "exit":"Dörren ut"}
+            ]
+        },
+        {
+            "title": "Dörren ut",
+            "description": "Du ser ut mot världen utanför, solen skiner och klockan är efter 11.",
+            "question":"Vad gör du?",
+            "suggestions": [
+                { "phrase": "Skit samma, jag går ut",
+                  "exits": [
+                      { "expr": "default", "situation": "Dörren ut"}
+                  ]
+                },
+                { "phrase": "Vänder om och går in", "exit":"Föreläsningssal A"}
+            ]
+        }        
+    ]
+}
