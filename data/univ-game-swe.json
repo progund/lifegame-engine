@@ -145,90 +145,101 @@
             "description": "",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med PWC", score:-1},
-                { "phrase": "Frågar om incidenten med buggen i lönesystemet som används i offentlig sektor.", "exit":"Studentrummet", "explanation":"Bra fråga, CGI verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", score:2},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+
+                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.",
+                  "exit":"Face to face-möte med PWC",
+                  "score":-1
+                },
+                { "phrase": "Frågar om incidenten med buggen i lönesystemet som används i offentlig sektor.",
+                  "exit":"Studentrummet", "explanation":"Bra fråga, CGI verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!",
+                  "score":2
+                },
+                {
+                    "phrase": "Går ut",
+                    "exit":"Studentrummet",
+                    "score":1
+                }
             ],
-            things:  [ { thing: "CGI-block" } ],
+            "things":  [ { "thing": "CGI-block" } ]
         },
         {
             "title": "Face to face-möte med PWC",
             "description": "PwC berättar att de är marknadsledande inom revision, skatte- och affärsrådgivning med 2 800 medarbetare och 34 kontor runt om i landet osv osv osv",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med HiQ", score:-2},
-                { "phrase": "Frågar om det finns vinkorgar i lunchrummet.", "exit":"Studentrummet", "explanation":"Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", score:2},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med HiQ", "score":-2},
+                { "phrase": "Frågar om det finns vinkorgar i lunchrummet.", "exit":"Studentrummet", "explanation":"Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", "score":2},
+                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "PWC-lanyard" } ],
+            "things":  [ { "thing": "PWC-lanyard" } ]
         },
         {
             "title": "Face to face-möte med HiQ",
             "description": "HiQ berättar att på HiQ gör man skillnad genom att tänka annorlunda och göra annorlunda. Tänk på HiQ som en one-stop-shop i skärningspunkten där teknik, människor och affär möts.",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med Acando", score:-3},
-                { "phrase": "Frågar om det finns vinkorgar i lunchrummet.", "exit":"Studentrummet", "explanation":"Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", score:2},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med Acando", "score":-3},
+                { "phrase": "Frågar om det finns vinkorgar i lunchrummet.", "exit":"Studentrummet", "explanation":"Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", "score":2},
+                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "HiQ-klistermärke" } ],            
+            "things":  [ { "thing": "HiQ-klistermärke" } ]
         },
         {
             "title": "Face to face-möte med Acando",
             "description": "Acando säger \"Teknologi driver förändring, men det är användarens vilja och förmåga att använda den som skapar värde. Med lika delar teknisk spetskompetens och insikt i mänskliga beteenden och triggers - och såklart ett rågat mått kreativitet - skapar vi idéer, löser problem och mobiliserar organisationer till förändring.\".",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med CGI", score:-4},
-                { "phrase": "Frågar om man kan få ut lönen i presentkort på Systembolaget.", "exit":"Studentrummet", "explanation":"Du möts av suckar och en förklaring att de inte jobbar så.", score:2},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med CGI", "score":-4},
+                { "phrase": "Frågar om man kan få ut lönen i presentkort på Systembolaget.", "exit":"Studentrummet", "explanation":"Du möts av suckar och en förklaring att de inte jobbar så.", "score":2},
+                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "Acando-penna" } ],            
+            "things":  [ { "thing": "Acando-penna" } ]            
         },
         {
             "title": "Teambuilding med Feelgood Företagshälsa",
             "description": "Feelgood Företagshälsa berättar vad ett bra klimat är....... och så vidare....",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Berättar för dem hur du mår.", "exit":"Teambuildingkväll på Liseberg", score:-1},
-                { "phrase": "Frågar dem hur hälsan är hos dem.", "exit":"Studentrummet", "explanation":"Bra fråga, de verkar lite bekymrade över frågan. Bra jobbat!", score:2},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+                { "phrase": "Berättar för dem hur du mår.", "exit":"Teambuildingkväll på Liseberg", "score":-1},
+                { "phrase": "Frågar dem hur hälsan är hos dem.", "exit":"Studentrummet", "explanation":"Bra fråga, de verkar lite bekymrade över frågan. Bra jobbat!", "score":2},
+                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "Feelgood-presentkort" } ],
+            "things":  [ { "thing": "Feelgood-presentkort" } ]
         },
         {
             "title": "Teambuildingkväll på Liseberg",
             "description": "Du går runt bland kaniner och attraktioner och spelar femkamp med dina kollegor.",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Kallpratar om hur kul det är att vara en i gänget", "exit":"Inspirationsföreläsning om Digital Innovation", score:-1},
-                { "phrase": "Frågar om man får övertidsersättning för att vara med", "exit":"Studentrummet", score:10},
-                { "phrase": "Frågar när man får öl.", "exit":"Uppföljande samtal med Feelgood Företagshälsa", "explanation":"Det var inte roligt. Enligt dem :)", score:2},
-                { "phrase": "Går tillbaka till studentrummet", "exit":"Studentrummet", score:1}
+                { "phrase": "Kallpratar om hur kul det är att vara en i gänget", "exit":"Inspirationsföreläsning om Digital Innovation", "score":-1},
+                { "phrase": "Frågar om man får övertidsersättning för att vara med", "exit":"Studentrummet", "score":10},
+                { "phrase": "Frågar när man får öl.", "exit":"Uppföljande samtal med Feelgood Företagshälsa", "explanation":"Det var inte roligt. Enligt dem :)", "score":2},
+                { "phrase": "Går tillbaka till studentrummet", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "Lisbergs-kanin" } ],
+            "things":  [ { "thing": "Lisbergskanin" } ]
         },
         {
             "title": "Inspirationsföreläsning om Digital Innovation",
             "description": "Du sitter i en sal och lyssnar på någon som pratar om vikten av att innovera och att göra detta digitalt. Det beslutas att ni skall införa 45 minuters innoverande varje vecka.",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Säger att det låter jättekul", "exit":"Teambuilding med Feelgood Företagshälsa", score:-10},
-                { "phrase": "Smiter ut och går till puben.", "exit":"Studentpuben", score:2},
-                { "phrase": "Frågar om man kan planera in innovation på detta sätt", "exit":"Studentrummet", "explanation":"Det var inte roligt. Enligt dem :)", score:10},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+                { "phrase": "Säger att det låter jättekul", "exit":"Teambuilding med Feelgood Företagshälsa", "score":-10},
+                { "phrase": "Smiter ut och går till puben.", "exit":"Studentpuben", "score":2},
+                { "phrase": "Frågar om man kan planera in innovation på detta sätt", "exit":"Studentrummet", "explanation":"Det var inte roligt. Enligt dem :)", "score":10},
+                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "Feelgood-presentkort" } ],
+            "things":  [ { "thing": "Feelgood-presentkort" } ]
         },
         {
             "title": "Uppföljande samtal med Feelgood Företagshälsa",
             "description": "Feelgood pratar om vikten av att vara en kugge i det stora maskineriet samtidigt som din individuella hälsa är viktig. Feelgood föreslår att du är positiv på kommande möten och att du går med i en bokklubb där ni diskuterar böcker.",
             "question":"Vad gör du?",
             "suggestions": [
-                { "phrase": "Berättar för dem hur du mår.", "exit":"Teambuilding med Feelgood Företagshälsa", score:-1},
-                { "phrase": "Frågar om de skämtar", "exit":"Studentrummet", "explanation":"Bra fråga, de verkar lite bekymrade över frågan. Bra jobbat!", score:2},
-                { "phrase": "Går ut", "exit":"Studentrummet", score:1}
+                { "phrase": "Berättar för dem hur du mår.", "exit":"Teambuilding med Feelgood Företagshälsa", "score":-1},
+                { "phrase": "Frågar om de skämtar", "exit":"Studentrummet", "explanation":"Bra fråga, de verkar lite bekymrade över frågan. Bra jobbat!", "score":2},
+                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
             ],
-            things:  [ { thing: "CGI-block" } ],
+            "things":  [ { "thing": "Feelgood-lanyard" } ]
         }        
         
     ]
