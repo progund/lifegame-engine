@@ -24,10 +24,23 @@ public class LifeVerifier {
   private int failures;
   private Set<String> missingSituations;
   private Set<String> missingThings;
+  private Set<String> missingExits;
   
   public void verifySuggestion(Suggestion suggestion) throws LifeVerifierException {
     for (Exit e : suggestion.exits()) {
-      if (engine.getSituation(e.exit())==null) {
+
+      System.out.println("verifySuggestion suggestion: \"" + e.exit() + "\"");
+      if ( (e.exit()==null || e.exit().equals(""))) {
+        failures++;
+        if (throwExceptions) {
+          Log.i(LOG_TAG, "empty");
+          throw new LifeVerifierException ("Exit empty");
+        } else {
+          Log.i(LOG_TAG, "      + verifying exit: " + e.exit() + ":  Failed");
+          missingExits.add("\"\"");
+        }
+      
+      } else if (engine.getSituation(e.exit())==null) {
         failures++;
         if (throwExceptions) {
           throw new LifeVerifierException ("Could not find exit \"" + e.exit() + "\"");
@@ -74,6 +87,7 @@ public class LifeVerifier {
     engine = new LifeGameEngine(file);
     missingSituations = new HashSet<>();
     missingThings = new HashSet<>();
+    missingExits = new HashSet<>();
   } 
 
   public Set<String> missingSituations() {
@@ -82,6 +96,10 @@ public class LifeVerifier {
 
   public Set<String> missingThings() {
     return missingThings;
+  }
+  
+  public Set<String> missingExits() {
+    return missingExits;
   }
   
   public void verifyThing(String thing) {
@@ -123,6 +141,7 @@ public class LifeVerifier {
       System.out.println(" * Failures: " + verifier.failures());
       System.out.println(" * Missing situations: " + verifier.missingSituations());
       System.out.println(" * Missing things:     " + verifier.missingThings());
+      System.out.println(" * Missing exits:      " + verifier.missingExits());
       System.out.println(" * Situations:         " + verifier.engine.game().situations().values().size());
     } catch (LifeVerifierException | InvalidLifeException e) {
       e.printStackTrace();

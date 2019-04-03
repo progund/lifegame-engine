@@ -60,8 +60,9 @@ public class LifeCli {
       System.out.println(" * Failures: " + verifier.failures());
       System.out.println(" * Missing situations: " + verifier.missingSituations());
       System.out.println(" * Missing things:     " + verifier.missingThings());
+      System.out.println(" * Missing exits:      " + verifier.missingExits());
       if (verifier.failures()!=0) {
-        System.exit(1);
+        //System.exit(1);
       }
     } catch (LifeVerifierException | InvalidLifeException e) {
       e.printStackTrace();
@@ -74,7 +75,7 @@ public class LifeCli {
     while( here!=null
            &&
            !engine.gameOver() ) {
-          
+
       println("\n\n\n ---=== " + here.title() + " ===---\n");
       println(here.description() + "\n");
       Log.i(LOG_TAG, " Round information");
@@ -110,6 +111,12 @@ public class LifeCli {
           String phrase = here.suggestions().get(menuIndex).phrase();
           Log.d(LOG_TAG, "You said: " + input + " => " + menuIndex + " => " + phrase );
           engine.handleExit(phrase);
+
+          if ( engine.explanation() != null ) {
+            println("\n -- Explanation: " + engine.explanation());
+          }
+      
+          
           here = engine.situation();
         } else if ( menuIndex < (here.suggestions().size() + engine.things().entrySet().size())) {
           int dropIndex = menuIndex - here.suggestions().size() ;

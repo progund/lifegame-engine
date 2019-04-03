@@ -38,7 +38,7 @@ swe-test: $(JAVA_CLASSES)
 	printf "2\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
 
 verify: $(JAVA_CLASSES)
-	java -cp $(CLASSPATH) $(VERIFY) data/univ-swe.json
+	java -cp $(CLASSPATH) $(VERIFY) data/univ-game-swe.json
 
 autocli: $(JAVA_CLASSES)
 	printf "0\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI)
