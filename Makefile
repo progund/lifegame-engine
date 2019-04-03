@@ -40,6 +40,10 @@ swe-test: $(JAVA_CLASSES)
 verify: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(VERIFY) data/univ-game-swe.json
 
+situations: 
+	@cat data/univ-game-swe.json | jq '.situations[].title'
+	@echo -n "Situtions: " && cat data/univ-game-swe.json | jq '.situations[].title' | wc -l
+
 autocli: $(JAVA_CLASSES)
 	printf "0\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI)
 
