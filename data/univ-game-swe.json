@@ -3,33 +3,57 @@
     "start": "Entren",
     "situations": [
         {
-            "title": "Entren",
-            "description": "Du befinner dig i ingången till universitetet",
+            "title": "Föreläsningssal A",
+            "description": "Du befinner du i en föreläsningssal full med studenter. Alla verkar förväntansfulla inför visdomsord från föreläsaren.",
             "question":"Vad gör du?",
-            "things": [
-                { "thing": "penna" }
-            ],
             "suggestions": [
-                { "phrase": "Går in",
+                { "phrase": "Funderar på att gå hem",
                   "exits": [
-                      { "expr":" score > 10", "situation": "Föreläsning om hippologi", "explanation": "Du har redan tillräcklig erfarenhet."},
-                      { "expr":"default", "situation": "Studentrummet"}
+                      { "expr":"situations > 10 ", "situation": "Dörren ut" },
+                      { "expr":"default", "situation": "Föreläsningssal A"}
                   ]
                 },
-                { "phrase": "Vänder om och går ut", "exit":"Dörren ut"}
+                { "phrase": "Lyssnar lite på vad som sägs och inser att det är bättre att gå mot studentrummet.", "score": 1, "exit":"Studentrummet"},
+                { "phrase": "Lyssnar färdigt och går mot studentrummet", "exit":"Studentrummet"},
+                { "phrase": "Går mot utgången", "exit":"Entren"}
             ]
         },
         {
-            "title": "Föreläsning om hippologi",
-            "description": "Du befinner dig i en föreläsningssal där Skolverket pratar om hippologi.",
+            "title": "Föreläsningssal B",
+            "description": "Läraren börjar prata om ..... ",
+            "question":"Vad gör du?",
+            "suggestions": [
+                { "phrase": "Funderar på att gå hem",
+                  "exits": [
+                      { "expr":"situations > 10 ", "situation": "Dörren ut" },
+                      { "expr":"default", "situation": "Föreläsningssal A"}
+                  ]
+                },
+                { "phrase": "Lyssnar lite på vad som sägs och inser att det är bättre att gå mot studentrummet.", "score": 1, "exit":"Studentrummet"},
+                { "phrase": "Lyssnar färdigt och går mot studentrummet", "exit":"Studentrummet"},
+                { "phrase": "Går mot utgången", "exit":"Entren"}
+            ]
+        },
+        {
+            "title": "Tentamen",
+            "description": "Du sitter i en sal med 100 andra studenter",
+            "question":"Vad gör du?",
+            "suggestions": [
+                { "phrase": "Börjar sjunga \"Jag går och fiskar\" Per Gessle", "score": -10, "exit":"Studentrummet", "explanation": "Även om det var roligt så kan man bara inte sjunga en låt med Per Gessle"},
+                { "phrase": "Rullar ihop mina papper och går till Studentrummet och lyssnar på \"Dummy up\" med Frank Zappa för vidare instruktioner", "exit":"Studentrummet", "score": 2},
+                { "phrase": "Skriver klart tentan", "exit":"Betyg i grundkursen", "score": 1},
+                { "phrase": "Går mot utgången", "exit":"Entren"}
+            ]
+        },
+        {
+            "title": "Betyg i grundkursen",
+            "description": "Ditt betyg ligger i rummet",
             "question":"Vad gör du?",
             "things": [
-                { "thing": "hästsko" }
+                { "thing": "betyg" }
             ],
             "suggestions": [
-                { "phrase": "Gå till puben", "exit": "Studentpuben", "score": 10 },
-                { "phrase": "Stanna på föreläsningen", "exit":"Föreläsning om hippologi"},
-                { "phrase": "Går mot utgången", "exit":"Entren"}
+                { "phrase": "Går mot Studentrummet", "exit":"Studentrummet" }
             ]
         },
         {
@@ -43,66 +67,30 @@
                 { "phrase": "Gå till puben", "exit": "Studentpuben" },
                 { "phrase": "Stanna i Studentrummet", "exit":"Studentrummet"},
                 { "phrase": "Går mot utgången", "exit":"Entren"},
-                { "phrase": "Går på föreläsning om hippologi", "exit":"Föreläsning om hippologi"},
-                { "phrase": "Gå på Face-to-face-möte med CGI", "exit":"Face to face-möte med CGI"},
-                { "phrase": "Går på IT-tentamen", "exits":
+                { "phrase": "Går på föreläsning i sal B", "exit":"Föreläsningssal B"},
+                { "phrase": "Går på tentamen", "exits":
                   [
-                      { "expr": "situations > 10 AND score > 5", "situation":"Tentamen i IT"},
-                      { "expr": "default", "situation": "Studentrummet", "explanation": "Du har inte tillräckligt med poäng"} 
-                  ]
-                },
-                { "phrase": "Går på Digitaliserings-tentamen", "exits":
-                  [
-                      { "expr": "situations > 20 AND score > 15", "situation":"Tentamen i IT"},
-                      { "expr": "default", "situation": "Studentrummet", "explanation": "Du har inte tillräckligt med poäng"} 
+                      { "expr": "situations > 10 AND score > 5", "situation":"Tentamen"},
+                      { "expr": "default", "situation": "Studentrummet", "explanation": "Du har inte rätta knycket"} 
                   ]
                 }
             ]
         },
         {
-            "title": "Tentamen i IT",
-            "description": "Du sitter ned i en sal där en tentamen hålls. Tydligen skall baskunskap i IT examineras. En av frågorna handlar om algoritmer: Vad är en algoritm?",
-            "question":"Vad svarar du?",
-            "suggestions": [
-                { "phrase": "Skiter i tentan och går mot Studentrummet", "exit":"Studentrummet"},
-                { "phrase": "Svarar: en begränsad uppsättning väldefinierade instruktioner för att lösa en uppgift", "exit":"Tentamen i IT - godkänd", "score": 10},
-                { "phrase": "Svarar: något som lever ett eget liv i datorn", "score": -10, "exit": "Studentrummet", "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om algoritmer, läs på mer"},
-                { "phrase": "Svarar: något som inget vet hur den skapats men den styr våra liv", "score": -10, "exit": "Studentrummet", "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om algoritmer, läs på mer" }
-            ]
-        },
-        {
-            "title": "Tentamen i IT - godkänd",
-            "description": "Du har klarat tentan, klockan är efter 11, och känner dig nöjd över din insats. Du kan plocka upp ditt betyg direkt.",
+            "title": "Entren",
+            "description": "Du befinner dig i ingången till universitetet",
             "question":"Vad gör du?",
             "things": [
-                { "thing": "IT-tenta" }
+                { "thing": "penna" }
             ],
             "suggestions": [
-                { "phrase": "Går mot Studentrummet", "exit":"Studentrummet"} ,
-                { "phrase": "Går mot utgången", "exit" : "Dörren ut" }
-            ]
-        },
-        {
-            "title": "Tentamen i digitalisering",
-            "description": "Du sitter ned i en sal där en tentamen hålls. Baskunskap i digitalisering skall examineras. En av frågorna lyder: Är digitaliseringen här?",
-            "question":"Vad svarar du?",
-            "suggestions": [
-                { "phrase": "Skiter i tentan och går mot Studentrummet", "exit":"Studentrummet"},
-                { "phrase": "Svarar: något som redan är här", "exit":"Tentamen i digitalisering - godkänd", "score": 10},
-                { "phrase": "Svarar: något som skrämmer många och vi måste vara vaksamma på den när den kommer", "score": -10, "exit": "Studentrummet", "explanation": "Du, i likhet med många andra, har denna vanföreställning. Läs på mer!"},
-                { "phrase": "Svarar: liksom kolmonoxod är den osynlig och mycket farlig", "score": -10, "exit": "Studentrummet", "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om digitalisering, läs på mer!" }
-            ]
-        },
-        {
-            "title": "Tentamen i digitalisering - godkänd",
-            "description": "Du har klarat tentan, klockan är efter 11, och känner dig nöjd över din insats. Du kan plocka upp ditt betyg direkt.",
-            "question":"Vad gör du?",
-            "things": [
-                { "thing": "Digitaliserings-tenta" }
-            ],
-            "suggestions": [
-                { "phrase": "Går mot Studentrummet", "exit":"Studentrummet"} ,
-                { "phrase": "Går mot utgången", "exit" : "Dörren ut" }
+                { "phrase": "Går in",
+                  "exits": [
+                      { "expr":" situations < 10", "situation": "Föreläsningssal A" },
+                      { "expr":"default", "situation": "Dörren ut"}
+                  ]
+                },
+                { "phrase": "Vänder om och går ut", "exit":"Dörren ut"}
             ]
         },
         {
@@ -110,14 +98,14 @@
             "description": "Du står vid baren i en pub. Trots all mesig IPA och annan skit ser du en riktig öl på tapp, en Pilsner.",
             "question":"Vad gör du?",
             "things": [
-                { "thing": "ölunderlägg" }
+                { "thing": "glas" }
             ],
             "suggestions": [
                 { "phrase": "Går mot Studentrummet", "exit":"Studentrummet"} ,
                 { "phrase": "Går mot utgången",
                   "exits": [
                       { "expr":" score > 3 ", "situation": "Dörren ut" },
-                      { "expr":"default", "situation": "Föreläsning om hippologi"}
+                      { "expr":"default", "situation": "Föreläsningssal A"}
                   ]
                 },
                 { "phrase": "Tar en öl", "score": 2 , "exits": [
@@ -134,113 +122,12 @@
             "suggestions": [
                 { "phrase": "Skit samma, jag går ut",
                   "exits": [
+                      { "expr": " score > 3", "situation": "End of game"},
                       { "expr": "default", "situation": "Dörren ut"}
                   ]
                 },
-                { "phrase": "Vänder om och går in", "exit":"Föreläsning om hippologi"}
+                { "phrase": "Vänder om och går in", "exit":"Föreläsningssal A"}
             ]
-        },
-        {
-            "title": "Face to face-möte med CGI",
-            "description": "",
-            "question":"Vad gör du?",
-            "suggestions": [
-
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.",
-                  "exit":"Face to face-möte med PWC",
-                  "score":-1
-                },
-                { "phrase": "Frågar om incidenten med buggen i lönesystemet som används i offentlig sektor.",
-                  "exit":"Studentrummet", "explanation":"Bra fråga, CGI verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!",
-                  "score":2
-                },
-                {
-                    "phrase": "Går ut",
-                    "exit":"Studentrummet",
-                    "score":1
-                }
-            ],
-            "things":  [ { "thing": "CGI-block" } ]
-        },
-        {
-            "title": "Face to face-möte med PWC",
-            "description": "PwC berättar att de är marknadsledande inom revision, skatte- och affärsrådgivning med 2 800 medarbetare och 34 kontor runt om i landet osv osv osv",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med HiQ", "score":-2},
-                { "phrase": "Frågar om det finns vinkorgar i lunchrummet.", "exit":"Studentrummet", "explanation":"Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", "score":2},
-                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "PWC-lanyard" } ]
-        },
-        {
-            "title": "Face to face-möte med HiQ",
-            "description": "HiQ berättar att på HiQ gör man skillnad genom att tänka annorlunda och göra annorlunda. Tänk på HiQ som en one-stop-shop i skärningspunkten där teknik, människor och affär möts.",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med Acando", "score":-3},
-                { "phrase": "Frågar om det finns vinkorgar i lunchrummet.", "exit":"Studentrummet", "explanation":"Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!", "score":2},
-                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "HiQ-klistermärke" } ]
-        },
-        {
-            "title": "Face to face-möte med Acando",
-            "description": "Acando säger \"Teknologi driver förändring, men det är användarens vilja och förmåga att använda den som skapar värde. Med lika delar teknisk spetskompetens och insikt i mänskliga beteenden och triggers - och såklart ett rågat mått kreativitet - skapar vi idéer, löser problem och mobiliserar organisationer till förändring.\".",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Säger att det låter intressant och du vill gärna träffa dem igen.", "exit":"Face to face-möte med CGI", "score":-4},
-                { "phrase": "Frågar om man kan få ut lönen i presentkort på Systembolaget.", "exit":"Studentrummet", "explanation":"Du möts av suckar och en förklaring att de inte jobbar så.", "score":2},
-                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "Acando-penna" } ]            
-        },
-        {
-            "title": "Teambuilding med Feelgood Företagshälsa",
-            "description": "Feelgood Företagshälsa berättar vad ett bra klimat är....... och så vidare....",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Berättar för dem hur du mår.", "exit":"Teambuildingkväll på Liseberg", "score":-1},
-                { "phrase": "Frågar dem hur hälsan är hos dem.", "exit":"Studentrummet", "explanation":"Bra fråga, de verkar lite bekymrade över frågan. Bra jobbat!", "score":2},
-                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "Feelgood-presentkort" } ]
-        },
-        {
-            "title": "Teambuildingkväll på Liseberg",
-            "description": "Du går runt bland kaniner och attraktioner och spelar femkamp med dina kollegor.",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Kallpratar om hur kul det är att vara en i gänget", "exit":"Inspirationsföreläsning om Digital Innovation", "score":-1},
-                { "phrase": "Frågar om man får övertidsersättning för att vara med", "exit":"Studentrummet", "score":10},
-                { "phrase": "Frågar när man får öl.", "exit":"Uppföljande samtal med Feelgood Företagshälsa", "explanation":"Det var inte roligt. Enligt dem :)", "score":2},
-                { "phrase": "Går tillbaka till studentrummet", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "Lisbergskanin" } ]
-        },
-        {
-            "title": "Inspirationsföreläsning om Digital Innovation",
-            "description": "Du sitter i en sal och lyssnar på någon som pratar om vikten av att innovera och att göra detta digitalt. Det beslutas att ni skall införa 45 minuters innoverande varje vecka.",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Säger att det låter jättekul", "exit":"Teambuilding med Feelgood Företagshälsa", "score":-10},
-                { "phrase": "Smiter ut och går till puben.", "exit":"Studentpuben", "score":2},
-                { "phrase": "Frågar om man kan planera in innovation på detta sätt", "exit":"Studentrummet", "explanation":"Det var inte roligt. Enligt dem :)", "score":10},
-                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "Feelgood-presentkort" } ]
-        },
-        {
-            "title": "Uppföljande samtal med Feelgood Företagshälsa",
-            "description": "Feelgood pratar om vikten av att vara en kugge i det stora maskineriet samtidigt som din individuella hälsa är viktig. Feelgood föreslår att du är positiv på kommande möten och att du går med i en bokklubb där ni diskuterar böcker.",
-            "question":"Vad gör du?",
-            "suggestions": [
-                { "phrase": "Berättar för dem hur du mår.", "exit":"Teambuilding med Feelgood Företagshälsa", "score":-1},
-                { "phrase": "Frågar om de skämtar", "exit":"Studentrummet", "explanation":"Bra fråga, de verkar lite bekymrade över frågan. Bra jobbat!", "score":2},
-                { "phrase": "Går ut", "exit":"Studentrummet", "score":1}
-            ],
-            "things":  [ { "thing": "Feelgood-lanyard" } ]
         }        
-        
     ]
 }
