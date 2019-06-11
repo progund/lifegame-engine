@@ -48,6 +48,11 @@
           "score": 10
         },
         {
+          "phrase": "Gå till studentrummt",
+          "exit": "Studentrummet",
+          "score": 0
+        },
+        {
           "phrase": "Stanna på föreläsningen",
           "exit": "Föreläsning om hippologi"
         },
@@ -95,6 +100,11 @@
               "situation": "Tentamen i IT"
             },
             {
+              "expr": " has Digitaliserings-tenta",
+              "situation": "Studentrummet",
+              "explanation": "Du har redan klarat tentan"
+            },
+            {
               "expr": "default",
               "situation": "Studentrummet",
               "explanation": "Du har inte tillräckligt med poäng"
@@ -106,7 +116,7 @@
           "exits": [
             {
               "expr": "situations > 20 AND score > 15",
-              "situation": "Tentamen i IT"
+              "situation": "Tentamen i digitalisering"
             },
             {
               "expr": "default",
@@ -521,7 +531,7 @@
       "question": "Vad gör du?",
       "suggestions": [
         {
-          "phrase": "Tar stolt upp ditt helrör ur din påse och häller upp et glas.",
+          "phrase": "Tar stolt upp ditt helrör ur din påse och häller upp ett glas.",
           "exit": "Studentpuben",
           "score": 10,
           "explanation": "Mötesdeltagarna utgick ifrån att du drev med dem. Synd, men roligt."
@@ -529,7 +539,7 @@
         {
           "phrase": "Struntar i att ta upp din påse och ser vad som händer härnäst",
           "exit": "Face to face-möte med CGI",
-          ", explanation": "Mötesdeltagarna tipsade dig om ett möte med CGI",
+          "explanation": "Mötesdeltagarna tipsade dig om ett möte med CGI",
           "score": -2
         },
         {
