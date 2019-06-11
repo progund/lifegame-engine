@@ -26,16 +26,16 @@ cli: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI)
 
 swe: $(JAVA_CLASSES)
-	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
+	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
 swe-game: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
 swe-test1: $(JAVA_CLASSES)
-	printf "2\n0\n1\n3\n0\n1\n0\n1\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
+	printf "2\n0\n1\n3\n0\n1\n0\n1\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
 swe-test: $(JAVA_CLASSES)
-	printf "2\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-swe.json
+	printf "2\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
 verify: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(VERIFY) data/univ-game-swe.json
