@@ -90,6 +90,13 @@ public class LifeVerifier {
     missingExits = new HashSet<>();
   } 
 
+  public LifeVerifier(LifeGameEngine engine) throws InvalidLifeException {
+    this.engine = engine;
+    missingSituations = new HashSet<>();
+    missingThings = new HashSet<>();
+    missingExits = new HashSet<>();
+  } 
+
   public Set<String> missingSituations() {
     return missingSituations;    
   }
