@@ -78,11 +78,11 @@ public class LifeCli {
 
       println("\n\n\n ---=== " + here.title() + " ===---\n");
       println(here.description() + "\n");
-      Log.i(LOG_TAG, " Round information");
-      Log.i(LOG_TAG, "  Score:              " + engine.score());
-      Log.i(LOG_TAG, "  Situation count:    " + engine.situationCount());
-      Log.i(LOG_TAG, "  Things in the room: " + engine.situation().actions());
-      Log.i(LOG_TAG, "  Things in your bag: " + engine.things());
+      Log.d(LOG_TAG, " Round information");
+      Log.d(LOG_TAG, "  Score:              " + engine.score());
+      Log.d(LOG_TAG, "  Situation count:    " + engine.situationCount());
+      Log.d(LOG_TAG, "  Things in the room: " + engine.situation().actions());
+      Log.d(LOG_TAG, "  Things in your bag: " + engine.things());
       println(here.question());
       int idx=0;
       for (Suggestion s : here.suggestions()) {
@@ -120,19 +120,19 @@ public class LifeCli {
           here = engine.situation();
         } else if ( menuIndex < (here.suggestions().size() + engine.things().entrySet().size())) {
           int dropIndex = menuIndex - here.suggestions().size() ;
-          Log.i(LOG_TAG, "Drop from user: index:   " + dropIndex);
-          Log.i(LOG_TAG, "Drop from user: index:   " + dropIndex);
-          Log.i(LOG_TAG, "Drop from user: actions: " + engine.situation().actions().size());
-          Log.i(LOG_TAG, "Drop from user: actions: " + engine.situation().actions());
-          Log.i(LOG_TAG, "Drop from user: things:  " + engine.things().size());
-          Log.i(LOG_TAG, "Drop from user: things:  " + engine.things());
-          Log.i(LOG_TAG, "Drop from user: actions: " + actions.size());
-          Log.i(LOG_TAG, "Drop from user: actions: " + actions);
-          Log.i(LOG_TAG, "Drop from user: --"        + actions.get(dropIndex));
+          Log.d(LOG_TAG, "Drop from user: index:   " + dropIndex);
+          Log.d(LOG_TAG, "Drop from user: index:   " + dropIndex);
+          Log.d(LOG_TAG, "Drop from user: actions: " + engine.situation().actions().size());
+          Log.d(LOG_TAG, "Drop from user: actions: " + engine.situation().actions());
+          Log.d(LOG_TAG, "Drop from user: things:  " + engine.things().size());
+          Log.d(LOG_TAG, "Drop from user: things:  " + engine.things());
+          Log.d(LOG_TAG, "Drop from user: actions: " + actions.size());
+          Log.d(LOG_TAG, "Drop from user: actions: " + actions);
+          Log.d(LOG_TAG, "Drop from user: --"        + actions.get(dropIndex));
 
           engine.removeActionThing(actions.get(dropIndex));
         } else {
-          Log.i(LOG_TAG, "Pick up from room: ");
+          Log.d(LOG_TAG, "Pick up from room: ");
           int takeIndex = menuIndex - (here.suggestions().size() + engine.things().entrySet().size());
           // add to user, remove from room
           engine.addActionThing(engine.situation().actions().get(takeIndex));
