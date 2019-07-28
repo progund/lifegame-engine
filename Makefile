@@ -14,6 +14,7 @@ JAVA_FILES= \
   src/se/juneday/lifegame/verification/LifeVerifier.java \
   src/se/juneday/lifegame/test/LifeCli.java \
   src/se/juneday/lifegame/test/TestParser.java \
+  src/se/juneday/lifegame/test/TestExpression.java \
   src/se/juneday/lifegame/test/TestExpressionParser.java
 JAVA_CLASSES=$(JAVA_FILES:.java=.class)
 
@@ -46,6 +47,13 @@ situations:
 
 autocli: $(JAVA_CLASSES)
 	printf "0\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI)
+
+unit-test: $(JAVA_CLASSES)
+#	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestParser
+#	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestExpressionParser
+	@echo "---===[ Testing expressions ]===-----"
+	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestExpression
+
 
 clean:
 	rm -f $(JAVA_CLASSES)
