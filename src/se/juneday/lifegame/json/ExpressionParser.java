@@ -78,13 +78,13 @@ public class ExpressionParser {
     }
   */
   
-  private String gameExpressionToJava(String expr) {
-    if (expr.equals(SCORE)) {
-      return "g.points()";
-    } else {
-      return "g.situationCount()";
-    }
-  }
+  // private String gameExpressionToJava(String expr) {
+  //   if (expr.equals(SCORE)) {
+  //     return "g.points()";
+  //   } else {
+  //     return "g.situationCount()";
+  //   }
+  // }
 
   private boolean isEmpty(SimpleExpr se) {
     return ( se.op1 == null && se.expr == null && se.op2 == null);
@@ -97,9 +97,11 @@ public class ExpressionParser {
   }
   
   private  Predicate<Game> createPointsGTPredicate(SimpleExpr se) {
-    switch (se.op2) {
+    //    System.err.print(" ==================== : " + se + " || " + se.op2);
+    switch (se.op1) {
     case SCORE:
-      return g -> g.score() > g.score();
+      //System.err.println(" ==================== ");
+      return g -> g.score() > Integer.parseInt(se.op2);
     case SITUATIONS:
       return g -> g.score() > g.situationCount();
     default:
@@ -124,7 +126,7 @@ public class ExpressionParser {
     }
   }
   
-  private  Predicate<Game> createPointsEQPredicate(SimpleExpr se) {
+  private Predicate<Game> createPointsEQPredicate(SimpleExpr se) {
     switch (se.op2) {
     case SCORE:
       return g -> g.score() == g.score();
@@ -135,7 +137,7 @@ public class ExpressionParser {
     }
   }
   
-  private  Predicate<Game> createPointsNEPredicate(SimpleExpr se) {
+  private Predicate<Game> createPointsNEPredicate(SimpleExpr se) {
     switch (se.op2) {
     case SCORE:
       return g -> g.score() != g.score();
@@ -162,11 +164,12 @@ public class ExpressionParser {
   }
 
   private  Predicate<Game> createSituationsLTPredicate(SimpleExpr se) {
+    //    System.err.println(" --- [" + se + "] ----- " + se.op2);
     switch (se.op2) {
     case SCORE:
       return g -> g.situationCount() < g.score();
     case SITUATIONS:
-      return g -> g.situationCount() < g.situationCount();
+      return g -> g.situationCount() < Integer.parseInt(se.op2);
     default:
       return g -> {
         Log.d(LOG_TAG," +++++++++++ situation "
@@ -254,6 +257,7 @@ public class ExpressionParser {
 
   
   private Predicate<Game> createPredicate(SimpleExpr se) {
+    //    System.err.println(" createPredicate(" + se +")");
     if (!validateSimpleExpr(se)) {
       // TODO: throw exception
       Log.d(LOG_TAG,"ERROR in expression: " + se);
@@ -319,8 +323,14 @@ public class ExpressionParser {
   }
   
   private boolean validateSimpleExpr(SimpleExpr se) {
+    // System.err.println(" validateSimpleExpr: " + se.op1);
+    // System.err.println(" validateSimpleExpr: " + se.op2);
+    // System.err.print(" validateSimpleExpr: " + gameExpressions);
+    // System.err.print("  " + gameExpressions.contains(se.op1));
+    // System.err.print(" | " + gameExpressions.contains(se.op2) + "  :: ");
     if ((isNumeric(se.op1) && gameExpressions.contains(se.op2)) ||
-        (isNumeric(se.op2) && gameExpressions.contains(se.op1))) {
+        (isNumeric(se.op2) && gameExpressions.contains(se.op1)) ||
+        gameExpressions.contains(se.op1) && gameExpressions.contains(se.op2)) {
       if (compareOperators.contains(se.expr)) {
         return true;
       }
