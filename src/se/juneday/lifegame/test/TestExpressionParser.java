@@ -17,7 +17,7 @@ public class TestExpressionParser {
 
       LifeGameEngine lengine;
       try { 
-        lengine = new LifeGameEngine("data/univ.json");
+        lengine = new LifeGameEngine("data/univ-game-swe.json");
         System.out.println();
       } catch (InvalidLifeException e) {
         System.out.println("\n\n\n ---=== FAILURE ===---\n");
