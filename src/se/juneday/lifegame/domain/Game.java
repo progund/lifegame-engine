@@ -30,11 +30,23 @@ public class Game {
         situationCount = 0;
         this.things = things;
         if (things == null) {
-            this.things = new HashMap<>();
+          this.things = new HashMap<>();
         }
         this.thingsNeeded = thingsNeeded;
     }
 
+
+  /* test only - there be dragons here */
+  public Game(int situationCount, int score) {
+        this.title = "Testing game";
+        this.situations = null;
+        this.things = new HashMap<>();
+        this.situations = new HashMap<>();
+        situations.put("End of game", Situation.endSituation);
+        this.situationCount = situationCount;
+        this.score = score;
+  }
+  
     public Situation getSituation(String title) {
         return situations.get(title);
     }
