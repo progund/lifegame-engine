@@ -59,6 +59,9 @@ unit-test: $(JAVA_CLASSES)
 doc: doc/game-syntax.md 
 	cd doc && pandoc game-syntax.md  -o game-syntax.pdf  
 
+stat:
+	ohcount -s
+
 clean:
 	rm -f $(JAVA_CLASSES)
 	find . -name "*~" | xargs rm -f
