@@ -137,7 +137,7 @@ Example: ```"things": "[ "thing": "pen", "thing": paper"]"```
 
 ## AND
 
-Used in an expression to yield true if the expressions **both** are true, otherwise false
+Used in an expression to yield true if the expressions **both** are true, otherwise false. If you're using *AND* or *OR*" in combination in an expression we refer to Java's implementation of Predicate - in short think of an expression like ```HAS pen AND has book OR count > 4``` to look like this ```HAS pen AND (has book OR count > 4)``` 
 
 ### Syntax
 
@@ -161,7 +161,7 @@ Used in an expression to yield true if any of the expressions are true, otherwis
 
 ```score == 10 OR situations < 20```
 
-The above expression evaluates to true if score is exactly 10 **or** situations is less than 20.
+The above expression evaluates to true if score is exactly 10 **or** situations is less than 20. If you're using *AND* or *OR*" in combination in an expression we refer to Java's implementation of Predicate  - in short think of an expression like ```HAS pen AND has book OR count > 4``` to look like this ```HAS pen AND (has book OR count > 4)``` 
 
 ## HAS
 
