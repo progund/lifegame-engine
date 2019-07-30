@@ -191,6 +191,16 @@ public class TestExpression {
     testExpression(10, 10, "situations > 5 AND HAS book AND HASNOT pen", false, things);
     testExpression(10, 10, "situations > 5 AND HAS book AND HAS pen", true, things);
     testExpression(10, 10, "situations > 5 AND HAS book AND HAS pen AND score > -1", true, things);
+
+    // sit > 50 OR ( score > 4 AND HAS einar)
+    // false OR ( false AND false) 
+    testExpression(10, 10, "situations > 50 OR score > 4 AND HAS einar ", false, things);
+    // sit > 50 OR ( score > 4 AND HAS book)
+    // false OR ( false AND true) 
+    testExpression(10, 10, "situations > 50 OR score > 4 AND HAS book ", true, things);
+    // HAS book AND ( situations > 50 OR score > 4 )
+    // true AND ( false OR true )
+    testExpression(10, 10, "HAS book AND situations > 50 OR score > 4 ", true, things);
     
   }
   
