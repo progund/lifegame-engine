@@ -21,7 +21,7 @@ In the previous example (from a text mode program):
 
 * the texts *Enter the wite room* and *Jump up and down ten times* are both suggestion.
 
-For each such suggestion you can add different exits (which are other situations or the same situation) which are entered depending on the what the user have done (see score, situations, things). 
+For each such suggestion you can add different exits (which are other situations or the same situation) which are entered depending on the what the user have done (see score, situations, things). The situations (as specified by exits) are not visible to the user nor are the expressions controlling the actual exit choosen.
 
 # Game syntax
 
@@ -101,7 +101,37 @@ Example: ```"things": "[ "thing": "pen", "thing": paper"]"```
 
 ## Situation example
 
-
+~~~
+    {
+      "title": "White room",
+      "description": "You're in a white room",
+      "question": "What do you do?",
+      "things": [
+        {
+          "thing": "guitar"
+        }
+      ],
+      "suggestions": [
+        {
+          "phrase": "Enter",
+          "exits": [
+            {
+              "expr": " score > 10",
+              "situation": "Blue room",
+              "explanation": "Good thing you had some points"
+            },
+            {
+              "expr": "default",
+              "situation": "White room"
+            }
+          ]
+        },
+        {
+          "phrase": "Turn around and exit",
+          "exit": "Outside"
+        }
+      ]
+~~~
 
 # Operators
 
@@ -125,7 +155,7 @@ Used in an expression to yield true if any of the expressions are true, otherwis
 
 ### Syntax
 
-```exp1 AND exp2```
+```exp1 OR exp2```
 
 ### Example
 
@@ -146,6 +176,20 @@ Used in an expression to yield true if the user has picked up the item given as 
 ```HAS book```
 
 The above expression evaluates to true if the user has an item called "book".
+
+## HASNOT
+
+Used in an expression to yield true if the user has NOT picked up the item given as argument.
+
+### Syntax
+
+```HASNOT item```
+
+### Example
+
+```HASNOT book```
+
+The above expression evaluates to true if the user has NOT picked up an item called "book".
 
 # Comparators
 
