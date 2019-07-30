@@ -136,19 +136,19 @@ public class TestExpression {
      */
     Map<ThingAction, Integer> things;
     things = new HashMap<>();
-    testExpression(0, 0, "has book", false, things);
-    testExpression(0, 0, "hasnot book", true, things);
-    testExpression(0, 0, "has book AND has pen", false, things);
-    testExpression(0, 0, "hasnot book AND hasnot pen", true, things);
-    testExpression(0, 0, "has book OR hasnot pen", true, things);
+    testExpression(0, 0, "HAS book", false, things);
+    testExpression(0, 0, "HASNOT book", true, things);
+    testExpression(0, 0, "HAS book AND HAS pen", false, things);
+    testExpression(0, 0, "HASNOT book AND HASNOT pen", true, things);
+    testExpression(0, 0, "HAS book OR HASNOT pen", true, things);
     things.put(new ThingAction("book"), 1);
-    testExpression(0, 0, "has book", true, things);
-    testExpression(0, 0, "hasnot book", false, things);
-    testExpression(0, 0, "has book AND has pen", false, things);
-    testExpression(0, 0, "has book AND hasnot pen", true, things);
-    testExpression(0, 0, "has book AND hasnot pen", true, things);
+    testExpression(0, 0, "HAS book", true, things);
+    testExpression(0, 0, "HASNOT book", false, things);
+    testExpression(0, 0, "HAS book AND HAS pen", false, things);
+    testExpression(0, 0, "HAS book AND HASNOT pen", true, things);
+    testExpression(0, 0, "HAS book AND HASNOT pen", true, things);
     things.put(new ThingAction("pen"), 1);
-    testExpression(0, 0, "has book AND hasnot pen", false, things);
+    testExpression(0, 0, "HAS book AND HASNOT pen", false, things);
 
 
     
