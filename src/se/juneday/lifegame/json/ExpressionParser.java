@@ -30,7 +30,8 @@ public class ExpressionParser {
 
   public final static String SCORE = "score";
   public final static String SITUATIONS = "situations";
-  public final static String HAS = "has";
+  public final static String HAS = "HAS";
+  public final static String HASNOT = "HASNOT";
   private static final String LOG_TAG = ExpressionParser.class.getSimpleName();
 
   private Set<String> logicalOperators;
@@ -239,6 +240,11 @@ public class ExpressionParser {
     return g -> { for (ThingAction a : g.things().keySet()) { if ( a.thing().equals(se.op2)) { return true;} } ; return false; } ;
   }
   
+  private  Predicate<Game>  createHasNotPredicate(SimpleExpr se) {
+    // TODO: properly implement the below
+    return g -> { for (ThingAction a : g.things().keySet()) { if ( a.thing().equals(se.op2)) { return false;} } ; return true; } ;
+  }
+  
   private  Predicate<Game>  createSituationsPredicate(SimpleExpr se) {
     switch (se.expr) {
     case GT:
@@ -269,6 +275,8 @@ public class ExpressionParser {
     switch (se.expr) {
     case HAS:
       return createHasPredicate(se);
+    case HASNOT:
+      return createHasNotPredicate(se);
     }
 
     switch (se.op1) {
@@ -322,6 +330,15 @@ public class ExpressionParser {
     }
   }
   
+  private boolean validateHasNotExpression(SimpleExpr se) {
+    if ( (se.op1 == null) && (HASNOT.equals(se.expr)) && (se.op2!=null) ) {
+      thingsNeeded.add(se.op2);
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
   private boolean validateSimpleExpr(SimpleExpr se) {
     // System.err.println(" validateSimpleExpr: " + se.op1);
     // System.err.println(" validateSimpleExpr: " + se.op2);
@@ -336,6 +353,9 @@ public class ExpressionParser {
       }
     }
     if (validateHasExpression(se)) {
+      return true;
+    }
+    if (validateHasNotExpression(se)) {
       return true;
     }
     Log.d(LOG_TAG, "Invalid or incomplete Simple Expression: " + se);
@@ -387,6 +407,7 @@ public class ExpressionParser {
     String[] expressions = exprString.split(" ");
     List<String> simpleExpression;
 
+
     String logicalOperator = "";
     SimpleExpr se = new SimpleExpr();
     for (String e : expressions) {
@@ -409,6 +430,8 @@ public class ExpressionParser {
         }
       } else if (HAS.equals(e)) {
         se.expr = e;
+      } else if (HASNOT.equals(e)) {
+        se.expr = e;
       } else if (gameExpressions.contains(e)) {
         Log.d(LOG_TAG," * game expr: " + e);
         if (se.op1 != null) {
@@ -424,7 +447,7 @@ public class ExpressionParser {
           se.op1 = e;
         }
       } else {
-        // Assume HAS
+        // Assume HAS or HASNOT
         se.op1 = null;
         se.op2 = e;
       }
