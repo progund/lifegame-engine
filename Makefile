@@ -54,6 +54,10 @@ unit-test: $(JAVA_CLASSES)
 	@echo "---===[ Testing expressions ]===-----"
 	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestExpression
 
+.PHONY: doc
+
+doc: doc/game-syntax.md 
+	cd doc && pandoc game-syntax.md  -o game-syntax.pdf  
 
 clean:
 	rm -f $(JAVA_CLASSES)
