@@ -176,6 +176,21 @@ public class TestExpression {
     testExpression(10, 10, "situations > 0 OR score > 10",  true, null);
     testExpression(10, 10, "situations > 10 OR score > 0",  true, null);
     testExpression(10, 10, "situations > 10 OR score > 10 ", false, null);
+
+    things = new HashMap<>();
+    testExpression(10, 10, "situations > 5 AND HAS book", false, things);
+    testExpression(10, 10, "situations > 5 AND HAS book", false, things);
+    testExpression(10, 10, "situations > 5 AND HASNOT book", true, things);
+    testExpression(10, 10, "situations > 5 AND HASNOT book AND HASNOT pen", true, things);
+    things.put(new ThingAction("book"), 1);
+    testExpression(10, 10, "situations > 5 AND HAS book", true, things);
+    testExpression(10, 10, "situations > 5 AND HAS book", true, things);
+    testExpression(10, 10, "situations > 5 AND HASNOT book", false, things);
+    testExpression(10, 10, "situations > 5 AND HAS book AND HASNOT pen", true, things);
+    things.put(new ThingAction("pen"), 1);
+    testExpression(10, 10, "situations > 5 AND HAS book AND HASNOT pen", false, things);
+    testExpression(10, 10, "situations > 5 AND HAS book AND HAS pen", true, things);
+    testExpression(10, 10, "situations > 5 AND HAS book AND HAS pen AND score > -1", true, things);
     
   }
   
