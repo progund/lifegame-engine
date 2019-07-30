@@ -1,19 +1,43 @@
+# Introduction
 
-# Basic
+Each game you write circles around situations, in the sense that a user can be in a situation (such *in a white room* or *on the surface of Mars*). Each such situation has a description, a question and also a list of things. A situation also has a list of suggestion from which the user can choose what to do next.
 
-## title
+Let's look at a simple example:
+
+~~~
+You're in a white room full of lamps.
+
+What would you like to do?
+
+1. Enter the wite room
+2. Jump up and down ten times
+~~~
+
+In the previous example (from a text mode program):
+
+* the text *You're in a white room full of lamps.* is the description
+
+* the texts *What would you like to do?* if the question
+
+* the texts *Enter the wite room* and *Jump up and down ten times* are both suggestion.
+
+For each such suggestion you can add different exits (which are other situations or the same situation) which are entered depending on the what the user have done (see score, situations, things). 
+
+# Game syntax
+
+# title
 
 The title of the game.
 
 Example: ```"title": "University game - Reach Nirvana in academia"```
 
-## start
+# start
 
 The situation where the game begins.
 
 Example: ```"start": "Jupiter"```
 
-## Situations
+# Situations
 
 A list of situations (see situation).
 
