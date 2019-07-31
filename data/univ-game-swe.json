@@ -100,7 +100,7 @@
               "situation": "Tentamen i IT"
             },
             {
-              "expr": " has Digitaliserings-tenta",
+              "expr": "HAS Digitaliseringstenta",
               "situation": "Studentrummet",
               "explanation": "Du har redan klarat tentan"
             },
@@ -112,7 +112,7 @@
           ]
         },
         {
-          "phrase": "Går på Digitaliserings-tentamen",
+          "phrase": "Går på Digitaliseringstentamen",
           "exits": [
             {
               "expr": "situations > 20 AND score > 15",
@@ -213,7 +213,7 @@
       "question": "Vad gör du?",
       "things": [
         {
-          "thing": "Digitaliserings-tenta"
+          "thing": "Digitaliseringstenta"
         }
       ],
       "suggestions": [
@@ -259,7 +259,7 @@
           "score": 2,
           "exits": [
             {
-              "expr": "  has pengar ",
+              "expr": "  HAS pengar ",
               "situation": "Studentpuben"
             },
             {
