@@ -157,7 +157,7 @@
     },
     {
       "title": "Tentamen i IT - godkänd",
-      "description": "Du har klarat tentan, klockan är efter 11, och känner dig nöjd över din insats. Du kan plocka upp ditt betyg direkt.",
+      "description": "Du har klarat tentan, klockan är efter 11, och känner dig nöjd över din insats. Du kan plocka upp ditt betyg direkt om du inte redan gjort det.",
       "question": "Vad gör du?",
       "things": [
         {
@@ -209,7 +209,7 @@
     },
     {
       "title": "Tentamen i digitalisering - godkänd",
-      "description": "Du har klarat tentan, klockan är efter 11, och känner dig nöjd över din insats. Du kan plocka upp ditt betyg direkt.",
+      "description": "Du har klarat tentan, klockan är efter 11, och känner dig nöjd över din insats. Du kan plocka upp ditt betyg direkt om du inte redan gjort det.",
       "question": "Vad gör du?",
       "things": [
         {
@@ -264,7 +264,7 @@
             },
             {
               "expr": "default",
-              "situation": "Dörren ut",
+              "situation": "Studentrummet",
               "explanation": "Utan pengar inga öl, du sparkas ut"
             }
           ]
@@ -277,11 +277,10 @@
       "question": "Vad gör du?",
       "suggestions": [
         {
-            "expr": " HAS Digitaliseringstenta",
             "phrase": "Jag går ut",
             "exits": [
             {
-              "expr": "default",
+                "expr": " HAS Digitaliseringstenta",
               "situation": "End of game"
             }
           ]
