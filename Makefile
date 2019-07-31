@@ -33,7 +33,7 @@ swe-game: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
 swe-test1: $(JAVA_CLASSES)
-	printf "2\n0\n1\n3\n0\n1\n0\n1\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
+	for i in 0 7 0 2 2 2 2 2 2 2 2 2 0 5 1 4 0 0 0 4 1 6 0 2 2 2 2 2 2 2 0 5 1 1 6 1 4 1 0 0 ; do printf "%s\n" $$i ; done | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
 swe-test: $(JAVA_CLASSES)
 	printf "2\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
@@ -49,10 +49,12 @@ autocli: $(JAVA_CLASSES)
 	printf "0\n0\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI)
 
 unit-test: $(JAVA_CLASSES)
-#	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestParser
+	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestParser
 #	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestExpressionParser
 	@echo "---===[ Testing expressions ]===-----"
 	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestExpression
+
+test: unit-test swe-test1
 
 .PHONY: doc
 
