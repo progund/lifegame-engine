@@ -115,7 +115,7 @@
           "phrase": "Går på Digitaliseringstentamen",
           "exits": [
             {
-              "expr": "situations > 20 AND score > 15",
+              "expr": "situations > 20 AND score > 15 AND HAS IT-tenta",
               "situation": "Tentamen i digitalisering"
             },
             {
@@ -277,11 +277,12 @@
       "question": "Vad gör du?",
       "suggestions": [
         {
-          "phrase": "Skit samma, jag går ut",
-          "exits": [
+            "expr": " HAS Digitaliseringstenta",
+            "phrase": "Jag går ut",
+            "exits": [
             {
               "expr": "default",
-              "situation": "Dörren ut"
+              "situation": "End of game"
             }
           ]
         },
