@@ -64,6 +64,14 @@ doc: doc/game-syntax.md
 stat:
 	ohcount -s
 
+source-dist: $(JAVA_FILES)
+	tar cvfz lifegame-engine.zip $(JAVA_FILES) doc
+
+bin-dist: $(JAVA_CLASSES)
+	jar cf lifegame-engine.jar $(JAVA_CLASSES)
+
+dist: source-dist bin-dist
+
 clean:
 	rm -f $(JAVA_CLASSES)
 	find . -name "*~" | xargs rm -f
