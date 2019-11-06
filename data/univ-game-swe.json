@@ -124,6 +124,20 @@
                             "explanation": "Du har inte tillräckligt med poäng"
                         }
                     ]
+                },
+                {
+                    "phrase": "Påbörjar examensarbetet",
+                    "exits": [
+                        {
+                            "expr": "HAS Digitaliseringstenta",
+                            "situation": "Examensarbete"
+                        },
+                        {
+                            "expr": "default",
+                            "situation": "Studentrummet",
+                            "explanation": "Du har inte klarat alla tentor."
+                        }
+                    ]
                 }
             ]
         },
@@ -559,6 +573,132 @@
                     "thing": "Brown-bag"
                 }
             ]
+        },
+        {
+            "title": "Examensarbete",
+            "description": "Du skall nu avsluta dina studier och det är dags att skriva examensarbetet. Du har fåttt en handledare, börjar skriva på din så kallade thesis och känner behov av handledning.",
+            "question": "Vad gör du?",
+            "suggestions": [
+                {
+                    "phrase": "Går mot lärarna för att hitta din handledare",
+                    "exit": "Dörr till lärarnas kontor",
+                },
+                {
+                    "phrase": "Skiter i exjobbet och går mot puben",
+                    "exit": "Studentpuben",
+                },
+                {
+                    "phrase": "Skiter i exjobbet och går mot studentrummet",
+                    "exit": "Studentrummet",
+                }
+            ]
+        },
+        {
+            "title": "Dörr till lärarnas kontor",
+            "description": "Dörren är låst (ett prefektbeslut), i kontrast till gällande lokalpolicy, som ett led i att förbättra utbildningen. Du ser en mass tumbleweeds och damm där inne. Vad gör du?",
+            "question": "Vad gör du?",
+            "suggestions": [
+                {
+                    "phrase": "Knackar på dörren",
+                    "exits": [
+                        {
+                            "expr": "default",
+                            "situation": "Dörr till lärarnas kontor",
+                            "explanation": "Ingen verkar hört dig"
+                        }
+                    ]
+                },
+                {
+                    "phrase": "Sparkar hårt på dörren",
+                    "exits": [
+                        {
+                            "expr": "default",
+                            "situation": "Handledarens kontor",
+                            "explanation": "Motvilligt har dörren öppnats och du har fått några suckar om att det nu (april) snart är sommar."
+                        }
+                    ]
+                },
+                {
+                    "phrase": "Ger upp - de verkar inte intresserade av att utbilda.",
+                    "exits": [
+                        {
+                            "expr": "default",
+                            "situation": "Studentrummet"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Handledarens kontor",
+            "description": "Du har äntligen fått träffa din handledare. Handledaren granskar din uppsats (thesis).",
+            "question": "Vad gör du?",
+            "suggestions": [
+                {
+                    "phrase": "Frågor om uppsatsen är ok",
+                    "exits": [
+                        {
+                            "expr": "HAS referenser AND HAS kvalitativ-metod",
+                            "situation": "Examensarbetet är godkänt",
+                            "explanation": "Du har med minst trettio referenser (oavsett kvalitet) och använder kvalitativ metod. Därmed är det en bra uppsats."
+                        },
+                        {
+                            "expr": "default",
+                            "situation": "Handledarens kontor",
+                            "explanation": "Du måste hitta referenser och använda kvalitativa metoder (kvantitativa metoder är handledaren skeptisk till)."
+                        }
+                    ]
+                },
+                {
+                    "phrase": "Lämnar rummet då du inte känner att du inte kan diskutera med din handledare.",
+                    "exit": "Studentrummet"
+                },
+                {
+                    "phrase": "Ber om att få en ny handledare",
+                    "exit": "Ny handledare"
+                }
+            ],
+            "things": [
+                { "thing": "referenser" },
+                { "thing": "kvalitativ-metod" }
+            ]
+        },
+        {
+            "title": "Examensarbetet är godkänt",
+            "description": "Ditt exjobb är godkänt. Grattis!",
+            "question": "Vad gör du?",
+            "suggestions": [
+                {
+                    "phrase": "Gör mot utgången",
+                    "exit": "Dörren ut"
+                },
+                {
+                    "phrase": "Går mot puben.",
+                    "exit": "Studentpuben"
+                }
+            ],
+            "things" : [
+                {
+                    "thing": "Examen"
+                }
+            ]
+        },
+        {
+            "title": "Ny handledare",
+            "description": "Du har inte hört något ännu om din nya handledare.",
+            "question": "Vad gör du?",
+            "suggestions": [
+                {
+                    "phrase": "Frågor om du fått någon ny",
+                    "exit": "Ny handledare"
+                },
+                {
+                    "phrase": "Påpekar det orimliga i att inte ha en handledare.",
+                    "exit": "Ny handledare"
+                }
+            ]
         }
     ]
 }
+    
+    
