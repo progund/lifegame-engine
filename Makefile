@@ -1,8 +1,10 @@
 LIFE_CLI=se.juneday.lifegame.test.LifeCli
 VERIFY=se.juneday.lifegame.verification.LifeVerifier
-CLASSPATH=.:src:lib/org.json.jar
+ORG_JSON=lib/org.json.jar
+CLASSPATH=.:src:$(ORG_JSON)
 
-%.class:%.java
+
+%.class:%.java 
 	javac  -cp $(CLASSPATH) ./$<
 
 JAVA_FILES= \
@@ -18,12 +20,12 @@ JAVA_FILES= \
   src/se/juneday/lifegame/test/TestExpressionParser.java
 JAVA_CLASSES=$(JAVA_FILES:.java=.class)
 
-all: $(BIN_DIR)  $(JAVA_CLASSES)
+all: deps $(BIN_DIR)  $(JAVA_CLASSES)
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR) 
 
-cli: $(JAVA_CLASSES)
+cli: $(JAVA_CLASSES) deps
 	java -cp $(CLASSPATH) $(LIFE_CLI)
 
 swe: $(JAVA_CLASSES)
@@ -71,6 +73,13 @@ bin-dist: $(JAVA_CLASSES)
 	jar cf lifegame-engine.jar $(JAVA_CLASSES)
 
 dist: source-dist bin-dist
+
+$(ORG_JSON):
+	mkdir -p lib
+	wget --no-check-certificate 'https://search.maven.org/remotecontent?filepath=org/json/json/20171018/json-20171018.jar' -O $@
+
+deps: $(ORG_JSON)
+
 
 clean:
 	rm -f $(JAVA_CLASSES)
