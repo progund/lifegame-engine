@@ -34,8 +34,12 @@ swe: $(JAVA_CLASSES)
 swe-game: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
-swe-test1: $(JAVA_CLASSES)
-	for i in 0 7 0 2 2 2 2 2 2 2 2 2 0 5 1 4 0 0 0 4 1 6 0 2 2 2 2 2 2 2 0 5 1 1 6 1 4 1 0 0 ; do printf "%s\n" $$i ; done | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
+swe-test-ok: $(JAVA_CLASSES)
+	for i in 2 0 9 0 2 2 2 2 2 2 2 2 2 2 2 2 0 5 1 5 0 0 0 6 1 5 0 0 2 2 2 2 2 2 2 0 7 0 0 0 1 7 8 0 0 0; do printf "%s\n" $$i ; sleep 0.1 ; done | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
+ 
+swe-test-stuck: $(JAVA_CLASSES)
+	for i in 2 0 9 0 2 2 2 2 2 2 2 2 2 2 2 2 0 5 1 5 0 0 0 6 1 5 0 0 2 2 2 2 2 2 2 0 7 0 0 1 2 0 0 0 0 1 1 1 1 1 0 0  ; do printf "%s\n" $$i ; sleep 0.1 ; done | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
+# 
 
 swe-test: $(JAVA_CLASSES)
 	printf "2\n0\n" | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
@@ -70,7 +74,7 @@ source-dist: $(JAVA_FILES)
 	tar cvfz lifegame-engine.zip $(JAVA_FILES) doc
 
 bin-dist: $(JAVA_CLASSES)
-	jar cf lifegame-engine.jar $(JAVA_CLASSES)
+	cd src && jar cf ../lifegame-engine.jar .
 
 dist: source-dist bin-dist
 
