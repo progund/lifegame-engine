@@ -1,6 +1,6 @@
 # Introduction
 
-The Lief Game engine can load games that you'we written. The games are
+The LifeGame engine can load games that you'we written. The games are
 very much like adventure games. Each game consist a couple of
 situations (such *in a white room* or *on the surface of Mars*) which
 a user can found her/him self in. Each such situation has a
