@@ -77,6 +77,11 @@
                     "exit": "Studentpuben"
                 },
                 {
+                    "phrase": "Går på toaletten",
+                    "exit": "Studentrummet",
+                    "explanation": "Toaletten finns nu i lärarnas korridor, sorry"
+                },
+                {
                     "phrase": "Stanna i Studentrummet",
                     "exit": "Studentrummet"
                 },
@@ -262,6 +267,11 @@
                     "exit": "Studentrummet"
                 },
                 {
+                    "phrase": "Går på toaletten",
+                    "exit": "Studentrummet",
+                    "explanation": "Toaletten finns nu i lärarnas korridor, sorry"
+                },
+                {
                     "phrase": "Går mot utgången",
                     "exits": [
                         {
@@ -300,8 +310,13 @@
                     "phrase": "Jag går ut",
                     "exits": [
                         {
-                            "expr": " HAS Digitaliseringstenta",
+                            "expr": " HAS Examen",
                             "situation": "End of game"
+                        },
+                        {
+                            "expr": "default",
+                            "situation": "Dörren ut",
+                            "explanation":"Lite som Hotel California, du kan inte gå ut .... såvida du inte har en examen."
                         }
                     ]
                 },
@@ -552,9 +567,9 @@
             "suggestions": [
                 {
                     "phrase": "Tar stolt upp ditt helrör ur din påse och häller upp ett glas.",
-                    "exit": "Studentpuben",
+                    "exit": "Teambuilding med Feelgood Företagshälsa",
                     "score": 10,
-                    "explanation": "Mötesdeltagarna utgick ifrån att du drev med dem. Synd, men roligt."
+                    "explanation": "Rolig grej.... men dina kollegor tog illa upp."
                 },
                 {
                     "phrase": "Struntar i att ta upp din påse och följer de råd du får.",
@@ -595,7 +610,7 @@
         },
         {
             "title": "Dörr till lärarnas kontor",
-            "description": "Dörren är låst (ett prefektbeslut), i kontrast till gällande lokalpolicy, som ett led i att förbättra utbildningen. Du ser en mass tumbleweeds och damm där inne. Vad gör du?",
+            "description": "Enligt ett prefektbeslut är dörren låst, i kontrast till gällande lokalpolicy, som ett led i att förbättra utbildningen. Du ser en massa tumbleweeds och damm där inne. Vad gör du?",
             "question": "Vad gör du?",
             "suggestions": [
                 {
