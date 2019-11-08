@@ -29,7 +29,7 @@ public class LifeVerifier {
   public void verifySuggestion(Suggestion suggestion) throws LifeVerifierException {
     for (Exit e : suggestion.exits()) {
 
-      System.out.println("verifySuggestion suggestion: \"" + e.exit() + "\"");
+      //      System.out.println("verifySuggestion suggestion: \"" + e.exit() + "\"");
       if ( (e.exit()==null || e.exit().equals(""))) {
         failures++;
         if (throwExceptions) {
@@ -144,15 +144,15 @@ public class LifeVerifier {
     try { 
       LifeVerifier verifier = new LifeVerifier(fileName);
       verifier.verify();
-      System.out.println("Verification report");
-      System.out.println(" * Failures: " + verifier.failures());
-      System.out.println(" * Missing situations: " + verifier.missingSituations());
-      System.out.println(" * Missing things:     " + verifier.missingThings());
-      System.out.println(" * Missing exits:      " + verifier.missingExits());
-      System.out.println(" * Situations:         " + verifier.engine.game().situations().values().size());
+      Log.i(LOG_TAG, "Verification report");
+      Log.i(LOG_TAG, " * Failures: " + verifier.failures());
+      Log.i(LOG_TAG, " * Missing situations: " + verifier.missingSituations());
+      Log.i(LOG_TAG, " * Missing things:     " + verifier.missingThings());
+      Log.i(LOG_TAG, " * Missing exits:      " + verifier.missingExits());
+      Log.i(LOG_TAG, " * Situations:         " + verifier.engine.game().situations().values().size());
     } catch (LifeVerifierException | InvalidLifeException e) {
       e.printStackTrace();
-      System.out.println(e.getMessage());
+      Log.i(LOG_TAG, e.getMessage());
     }
     
   }

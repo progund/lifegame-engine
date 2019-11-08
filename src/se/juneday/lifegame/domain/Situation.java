@@ -46,16 +46,12 @@ public class Situation {
     }
 
   public void removeActionThing(ThingAction t) {
-    System.out.println("actions: " + actions);
     actions.remove(t);
-    System.out.println("actions: " + actions);
   }
 
   public void addActionThing(ThingAction t) {
-    System.out.println("add actions: " + actions);
-        actions.add(t);
-    System.out.println("add actions: " + actions);
-    }
+    actions.add(t);
+  }
 
     @Override
     public String toString() {

@@ -79,7 +79,6 @@ public class JParser {
 
       JSONObject jsonSituation = jsonSituations.getJSONObject(i);
       String title = jsonSituation.getString(SITUATION_TITLE);
-      System.out.println(" \n\n --- Situation " + title + "-- \n\n");
       String sDescription = jsonSituation.getString(SITUATION_DESCRIPTION);
       String sQuestion = jsonSituation.getString(SITUATION_QUESTION);
       JSONArray exits = jsonSituation.getJSONArray(SITUATION_SUGGESTIONS);
@@ -102,7 +101,6 @@ public class JParser {
 
       // for each suggestion
       List<Suggestion> suggestionList = new ArrayList<>();
-      System.out.println("   -- exits: " + exits.length());
       for (int j = 0; j < exits.length(); j++) {
         JSONObject suggestionJson = exits.getJSONObject(j);
         List<Exit> exitList = new ArrayList<>();
@@ -111,7 +109,6 @@ public class JParser {
         // read suggestion phrase
         String phrase = readJsonString(suggestionJson, SITUATION_SUGGESTION_PHRASE, "");
         int situationScore = readJsonInt(suggestionJson, SITUATION_SUGGESTION_SCORE, 0);
-        System.out.println(" --> situation: " + phrase);
         
         
         // "exit" (one single exit)
@@ -127,12 +124,10 @@ public class JParser {
           // exitStr = readJsonString(exitJson, SITUATION_SUGGESTION_EXITS_SITUATION, null);
           
         } catch (JSONException e) {
-          System.out.println(" -- exception: " + e);
           Log.d(LOG_TAG, "Exception: ");
           //e.printStackTrace();
         }
         if (exitStr != null) {
-          System.out.println("    --> exit here: " + exitStr);
           String explanation = readJsonString(suggestionJson, SITUATION_SUGGESTION_EXPLANATION, null);
           exitList.add(new Exit(g -> true, exitStr, explanation));
           // } else {
@@ -144,8 +139,6 @@ public class JParser {
           JSONArray exitsJsonArray = suggestionJson.getJSONArray(SITUATION_SUGGESTION_EXITS);
 
 
-          System.out.println("    --> exit???  " + exitStr);
-
           // for each exits
           for (int k = 0; k < exitsJsonArray.length(); k++) {
             JSONObject exitObject = exitsJsonArray.getJSONObject(k);
@@ -156,8 +149,6 @@ public class JParser {
             String exit = exitObject.getString(SITUATION_SUGGESTION_EXITS_SITUATION);
             String explanation = readJsonString(exitObject, SITUATION_SUGGESTION_EXPLANATION, null);
             
-            System.out.println("    --> exit: " + exit);
-            System.out.println("Adding expr: " + expr + " | " + k  + " exit: " + exit + "  explanation: " + explanation);
             exitList.add(new Exit(ep.parse(expr), exit, explanation));
           }
         }
