@@ -4,7 +4,7 @@
     "situations": [
         {
             "title": "Entren",
-            "description": "Du befinner dig i ingången till universitetet",
+            "description": "Du befinner dig i ingången till universitetet. Byggnaden skapar ett intryck av att här finner man kunskap och kan lära sig mycket.",
             "question": "Vad gör du?",
             "things": [
                 {
@@ -13,7 +13,7 @@
             ],
             "suggestions": [
                 {
-                    "phrase": "Går in",
+                    "phrase": "Öppnar dörren och går in",
                     "exits": [
                         {
                             "expr": " score > 10",
@@ -34,7 +34,7 @@
         },
         {
             "title": "Föreläsning om hippologi",
-            "description": "Du befinner dig i en föreläsningssal där Skolverket pratar om hippologi.",
+            "description": "Du befinner dig i en föreläsningssal där Skolverket pratar om hippologi. Hippologin verkar på något sätt sammanknutet med IT men det verkar luddigt. Du får intrycket av att föreläsaren har kopierat en gammal presentation och missat ta bort gamla referenser.",
             "question": "Vad gör du?",
             "things": [
                 {
@@ -53,7 +53,11 @@
                     "score": 0
                 },
                 {
-                    "phrase": "Stanna på föreläsningen",
+                    "phrase": "Stanna på föreläsningen och ser vad som händer",
+                    "exit": "Föreläsning om hippologi"
+                },
+                {
+                    "phrase": "Frågar om läraren har kopierat materialet.",
                     "exit": "Föreläsning om hippologi"
                 },
                 {
@@ -64,7 +68,7 @@
         },
         {
             "title": "Studentrummet",
-            "description": "Du befinner dig i studentrumet. Ingen TV, dock ok trådlöst internet. ",
+            "description": "Du befinner dig i studentrumet. Här finns kök, glas, bord och trevliga studenter. Det verkar vara god stämning i rummet och en anda av samarbete finns där så det finns inget behov av tapter med apor på (en tapet med apor ökar som du säkert vet samhörighet och viljan att samverka).",
             "question": "Vad gör du?",
             "things": [
                 {
@@ -79,7 +83,7 @@
                 {
                     "phrase": "Går på toaletten",
                     "exit": "Studentrummet",
-                    "explanation": "Toaletten finns nu i lärarnas korridor, sorry"
+                    "explanation": "Toaletten finns nu, efter sommarens ombyggnad, inne i lärarnas korridor. Du kan inte gå på toaletten på denna våning längre. Sorry"
                 },
                 {
                     "phrase": "Stanna i Studentrummet",
@@ -107,7 +111,7 @@
                         {
                             "expr": "HAS Digitaliseringstenta",
                             "situation": "Studentrummet",
-                            "explanation": "Du har redan klarat tentan"
+                            "explanation": "Du har redan klarat tentan."
                         },
                         {
                             "expr": "default",
@@ -148,32 +152,32 @@
         },
         {
             "title": "Tentamen i IT",
-            "description": "Du sitter ned i en sal där en tentamen hålls. Tydligen skall baskunskap i IT examineras. En av frågorna handlar om algoritmer: Vad är en algoritm?",
+            "description": "Du sitter ned i en sal där en tentamen hålls. Tydligen skall baskunskap i IT examineras. En av frågorna lyder: Vad är en algoritm?",
             "question": "Vad svarar du?",
             "suggestions": [
                 {
-                    "phrase": "Skiter i tentan och går mot Studentrummet",
+                    "phrase": "Skiter i tentan, reser dig upp och går mot Studentrummet",
                     "exit": "Studentrummet"
                 },
                 {
-                    "phrase": "Svarar: en begränsad uppsättning väldefinierade instruktioner för att lösa en uppgift",
+                    "phrase": "En begränsad uppsättning väldefinierade instruktioner för att lösa en uppgift",
                     "exit": "Tentamen i IT - godkänd",
                     "score": 10
                 },
                 {
-                    "phrase": "Svarar: något som lever ett eget liv i datorn",
+                    "phrase": "Något som lever ett eget liv i datorn",
                     "score": -10,
                     "exit": "Studentrummet",
                     "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om algoritmer, läs på mer"
                 },
                 {
-                    "phrase": "Svarar: något som inget vet hur den skapats men den styr våra liv",
+                    "phrase": "Något som inget vet hur den skapats men den styr våra liv",
                     "score": -10,
                     "exit": "Studentrummet",
                     "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om algoritmer, läs på mer"
                 },
                 {
-                    "phrase": "Svarar: en del av ett sociotekniskt assemblage",
+                    "phrase": "En del av ett sociotekniskt assemblage",
                     "score": -10,
                     "exit": "Studentrummet",
                     "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om algoritmer, läs på mer"
@@ -191,7 +195,7 @@
             ],
             "suggestions": [
                 {
-                    "phrase": "Du är inbjuden på ett så kallat Brown Bag-seminarie. Du går dit.",
+                    "phrase": "Du är inbjuden på ett så kallat Brown Bag-seminarie. går dit.",
                     "exit": "Brown bag seminar om leadership"
                 },
                 {
@@ -214,18 +218,18 @@
                     "exit": "Studentrummet"
                 },
                 {
-                    "phrase": "Svarar: något som redan är här",
+                    "phrase": "Digitaliseringen är redan här",
                     "exit": "Tentamen i digitalisering - godkänd",
                     "score": 10
                 },
                 {
-                    "phrase": "Svarar: något som skrämmer många och vi måste vara vaksamma på den när den kommer",
+                    "phrase": "Digitaliseringen är något som skrämmer många och vi måste vara vaksamma på den när den kommer",
                     "score": -10,
                     "exit": "Studentrummet",
                     "explanation": "Du, i likhet med många andra, har denna vanföreställning. Läs på mer!"
                 },
                 {
-                    "phrase": "Svarar: liksom kolmonoxod är den osynlig och mycket farlig",
+                    "phrase": "Digitalisering, liksom kolmonoxod, är osynlig och mycket farlig",
                     "score": -10,
                     "exit": "Studentrummet",
                     "explanation": "Du verkar ha (inte ovanliga) vanföreställningar om digitalisering, läs på mer!"
@@ -254,7 +258,7 @@
         },
         {
             "title": "Studentpuben",
-            "description": "Du står vid baren i en pub. Trots all mesig IPA och annan skit ser du en riktig öl på tapp, en Pilsner.",
+            "description": "Du står vid baren i Studentpuben. Det finns en rad IPA och andra mer eller mindra odrickbara öl, men du ser en riktig öl på tapp, en Pilsner.",
             "question": "Vad gör du?",
             "things": [
                 {
@@ -269,7 +273,7 @@
                 {
                     "phrase": "Går på toaletten",
                     "exit": "Studentrummet",
-                    "explanation": "Toaletten finns nu i lärarnas korridor, sorry"
+                    "explanation": "Toaletten finns numera i lärarnas korridor, sorry"
                 },
                 {
                     "phrase": "Går mot utgången",
@@ -280,7 +284,8 @@
                         },
                         {
                             "expr": "default",
-                            "situation": "Föreläsning om hippologi"
+                            "situation": "Föreläsning om hippologi",
+                            "explanation": "Du tog fel dörr."
                         }
                     ]
                 },
@@ -295,7 +300,7 @@
                         {
                             "expr": "default",
                             "situation": "Studentrummet",
-                            "explanation": "Utan pengar inga öl, du sparkas ut"
+                            "explanation": "Utan pengar inga öl!! Du sparkas ut"
                         }
                     ]
                 }
@@ -328,7 +333,7 @@
         },
         {
             "title": "Face to face-möte med CGI",
-            "description": "",
+            "description": "Tjejen på CGI börjar med att berätta om sina positiva erfarenheter av att jobba med CGI. Att de reser till en huvudstad i Europa varje år, att de ibland trycker upp T-shirts med roliga texter och att det ibland går livat till på företagsfesterna. Hon tycker att jobbet är roligt då det är kreativt och utmanande.",
             "question": "Vad gör du?",
             "suggestions": [
                 {
@@ -356,7 +361,7 @@
         },
         {
             "title": "Face to face-möte med PWC",
-            "description": "PwC berättar att de är marknadsledande inom revision, skatte- och affärsrådgivning med 2 800 medarbetare och 34 kontor runt om i landet osv osv osv",
+            "description": "Killen från PwC berättar att de är marknadsledande inom revision, skatte- och affärsrådgivning med 2 800 medarbetare och 34 kontor runt om i landet. Han tar upp att de ibland går på after-work tillsammans.",
             "question": "Vad gör du?",
             "suggestions": [
                 {
@@ -384,7 +389,7 @@
         },
         {
             "title": "Face to face-möte med HiQ",
-            "description": "HiQ berättar att på HiQ gör man skillnad genom att tänka annorlunda och göra annorlunda. Tänk på HiQ som en one-stop-shop i skärningspunkten där teknik, människor och affär möts.",
+            "description": "Tjejen från HiQ berättar att på HiQ gör man skillnad genom att tänka annorlunda och göra annorlunda. Tänk på HiQ som en one-stop-shop i skärningspunkten där teknik, människor och affär möts.",
             "question": "Vad gör du?",
             "suggestions": [
                 {
@@ -395,7 +400,7 @@
                 {
                     "phrase": "Frågar om det finns vinkorgar i lunchrummet.",
                     "exit": "Studentrummet",
-                    "explanation": "Relevant fråga, PWC verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!",
+                    "explanation": "Relevant fråga, HiQ verkar bekymrade över frågan och det blir lite stelt. Du beslutar dig för att gå till Studentrummet. Bra jobbat!",
                     "score": 2
                 },
                 {
@@ -515,6 +520,12 @@
                     "score": 2
                 },
                 {
+                    "phrase": "Frågar om lärare får plagiera text.",
+                    "exit": "Studentrummet",
+                    "explanation": "Du fick bryskt reda på att lärare inte plagierar - det är bara studenter som gör så! Du blev utkörd från föreläsningen.",
+                    "score": 2
+                },
+                {
                     "phrase": "Frågar om man kan planera in innovation på detta sätt",
                     "exit": "Studentrummet",
                     "explanation": "Det var inte roligt. Enligt dem :)",
@@ -596,15 +607,15 @@
             "suggestions": [
                 {
                     "phrase": "Går mot lärarna för att hitta din handledare",
-                    "exit": "Dörr till lärarnas kontor",
+                    "exit": "Dörr till lärarnas kontor"
                 },
                 {
                     "phrase": "Skiter i exjobbet och går mot puben",
-                    "exit": "Studentpuben",
+                    "exit": "Studentpuben"
                 },
                 {
                     "phrase": "Skiter i exjobbet och går mot studentrummet",
-                    "exit": "Studentrummet",
+                    "exit": "Studentrummet"
                 }
             ]
         },
