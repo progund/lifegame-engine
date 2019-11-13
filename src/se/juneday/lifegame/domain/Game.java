@@ -87,10 +87,10 @@ public class Game {
   public void addThing(ThingAction thing) {
     Integer count = things.get(thing);
     if (count == null) {
-      Log.i(LOG_TAG, "  Things, adding first " + thing);
+      Log.v(LOG_TAG, "  Things, adding first " + thing);
       things.put(thing, 1);
     } else {
-      Log.i(LOG_TAG, "  Things, adding one more " + thing);
+      Log.v(LOG_TAG, "  Things, adding one more " + thing);
       things.put(thing, count + 1);
     }
   }
