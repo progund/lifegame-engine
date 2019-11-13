@@ -52,7 +52,7 @@ public class JParser {
 
 
   private String readJsonString(JSONObject json, String key, String defaultValue) {
-    Log.d(LOG_TAG, " readJsonString()" + json + " key: " + key);
+    Log.v(LOG_TAG, " readJsonString()" + json + " key: " + key);
     try {
       return json.getString(key);
     } catch (JSONException e) {
@@ -61,7 +61,7 @@ public class JParser {
   }
 
   private int readJsonInt(JSONObject json, String key, int defaultValue) {
-    Log.d(LOG_TAG, " readJsonInt()" + json + " key: " + key);
+    Log.v(LOG_TAG, " readJsonInt()" + json + " key: " + key);
     try {
       return json.getInt(key);
     } catch (JSONException e) {
@@ -83,7 +83,7 @@ public class JParser {
       String sQuestion = jsonSituation.getString(SITUATION_QUESTION);
       JSONArray exits = jsonSituation.getJSONArray(SITUATION_SUGGESTIONS);
 
-      Log.d(LOG_TAG, "exits: " + exits);
+      Log.v(LOG_TAG, "exits: " + exits);
       List<ThingAction> actionList = new ArrayList<>();
 
       // "things"
@@ -96,7 +96,7 @@ public class JParser {
           actionList.add(new ThingAction(thing));
         }
       } catch (JSONException e) {
-        Log.d(LOG_TAG, "no things in " + title);
+        Log.v(LOG_TAG, "no things in " + title);
       }
 
       // for each suggestion
@@ -112,7 +112,7 @@ public class JParser {
         
         
         // "exit" (one single exit)
-        Log.d(LOG_TAG, " trying to find exit in " + title + " => "+ suggestionJson);
+        Log.v(LOG_TAG, " trying to find exit in " + title + " => "+ suggestionJson);
         String exitStr = null;
         String expr = null;
         try {
@@ -120,11 +120,11 @@ public class JParser {
           exitStr = readJsonString(suggestionJson, SITUATION_SUGGESTION_EXIT, null);
           //String exitStr = readJsonString(exitJson, SITUATION_SUGGESTION_PHRASE, null);
           expr = readJsonString(suggestionJson,SITUATION_SUGGESTION_EXITS_EXPR, null);
-          Log.d(LOG_TAG, " trying to find exit in " + title + " => "+ exitStr+ "   <-----");
+          Log.v(LOG_TAG, " trying to find exit in " + title + " => "+ exitStr+ "   <-----");
           // exitStr = readJsonString(exitJson, SITUATION_SUGGESTION_EXITS_SITUATION, null);
           
         } catch (JSONException e) {
-          Log.d(LOG_TAG, "Exception: ");
+          Log.v(LOG_TAG, "Exception: ");
           //e.printStackTrace();
         }
         if (exitStr != null) {
@@ -134,7 +134,7 @@ public class JParser {
           //     System.out.println(" exit: " + expr + " " + exitStr);
           //     exitList.add(new Exit(ep.parse(expr), exitStr));
         } else {
-          Log.d(LOG_TAG, " trying to find exits in " + suggestionJson);
+          Log.v(LOG_TAG, " trying to find exits in " + suggestionJson);
           // "exits" (multiple exits depending on calculations)
           JSONArray exitsJsonArray = suggestionJson.getJSONArray(SITUATION_SUGGESTION_EXITS);
 

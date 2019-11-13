@@ -49,23 +49,23 @@ public class LifeGameEngine {
   public Situation handleExit(String answer) {
     game.incSituationCount();
 
-    Log.d(LOG_TAG, "handleExit(" + answer + ") ");
+    Log.v(LOG_TAG, "handleExit(" + answer + ") ");
     for (Suggestion suggestion : current.suggestions()) {
-      Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion);
+      Log.v(LOG_TAG, "handleExit(" + answer + "):   " + suggestion);
 
       if (answer.equals(suggestion.phrase())) {
-        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " found");
+        Log.v(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " found");
 
         game.incScore(suggestion.score());
 
         for (Exit e : suggestion.exits()) {
-          Log.d(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
-          Log.d(LOG_TAG,"handleExit:    situation count: " + situationCount());
+          Log.v(LOG_TAG,"handleExit(" + answer + "):   " + suggestion.phrase()+ "       exit: " + e);
+          Log.v(LOG_TAG,"handleExit:    situation count: " + situationCount());
           if (e.isTrue(game)) {
 
-            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
+            Log.v(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e);
             String title = e.exit();
-            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e + "  title: " + title + " RETURNING");
+            Log.v(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + "       exit: " + e + "  title: " + title + " RETURNING");
 
             latestExplanation = e.explanation();
             
@@ -75,24 +75,24 @@ public class LifeGameEngine {
             Situation savedCurrent = current;
             current = game.getSituation(title);
             if (current!=null) {
-              Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current.title());
+              Log.v(LOG_TAG, "handleExit(" + answer + "):   " + current.title());
             } else {
               Log.e(LOG_TAG, "current is null from: " + title);
             }
-            Log.d(LOG_TAG, "handleExit(" + answer + "):   " + current);
+            Log.v(LOG_TAG, "handleExit(" + answer + "):   " + current);
             if (current.title().equals(WIN_SITUATION)) {
-              Log.d(LOG_TAG, "You win!!");
+              Log.v(LOG_TAG, "You win!!");
               current = Situation.endSituation;
             }
             return current;
           }
         }
-        Log.d(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " handled");
+        Log.v(LOG_TAG, "handleExit(" + answer + "):   " + suggestion.phrase() + " handled");
       }
 
     }
     if (current.title().equals(WIN_SITUATION)) {
-      Log.d(LOG_TAG, "You win!!");
+      Log.v(LOG_TAG, "You win!!");
       current = Situation.endSituation;
     }
     Log.e(LOG_TAG, "Odd, we seem to have gotten an answer not suggested");

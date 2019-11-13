@@ -32,7 +32,7 @@ public class Exit {
   }
   
   public Boolean isTrue(Game game) {
-    Log.d(LOG_TAG, "isTrue(): " + predicate + "  ===> " + predicate.test(game) + "   exit situation" + exitSituation );
+    Log.v(LOG_TAG, "isTrue(): " + predicate + "  ===> " + predicate.test(game) + "   exit situation" + exitSituation );
     return predicate.test(game);
   }
 

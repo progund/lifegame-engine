@@ -73,4 +73,11 @@ public class Log {
       printTagMessage(tag, message);
     }
   }
+
+  public static void v(String tag, String message) {
+    if (logLevel.compareTo(LogLevel.VERBOSE) >= 0) {
+      printErrTagMessage(tag, message);
+    }
+  }
+  
 }

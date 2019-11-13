@@ -107,7 +107,7 @@ public class ExpressionParser {
       return g -> g.score() > g.situationCount();
     default:
       return g -> {
-        Log.d(LOG_TAG," +++++++++++ score "
+        Log.v(LOG_TAG," +++++++++++ score "
               + g.score() + " > value "
               + Integer.parseInt(se.op2) + " ==> "
               + (g.score() > Integer.parseInt(se.op2)) );
@@ -173,7 +173,7 @@ public class ExpressionParser {
       return g -> g.situationCount() < Integer.parseInt(se.op2);
     default:
       return g -> {
-        Log.d(LOG_TAG," +++++++++++ situation "
+        Log.v(LOG_TAG," +++++++++++ situation "
               + g.situationCount() + " < value "
               + Integer.parseInt(se.op2) + " ==> "
               + (g.situationCount() < Integer.parseInt(se.op2)) );
@@ -190,7 +190,7 @@ public class ExpressionParser {
       return g -> g.situationCount() > g.situationCount();
     default:
       return g -> {
-        Log.d(LOG_TAG," +++++++++++ situation "
+        Log.v(LOG_TAG," +++++++++++ situation "
               + g.situationCount() + " > value "
               + Integer.parseInt(se.op2) + " ==> "
               + (g.situationCount() > Integer.parseInt(se.op2)) );
@@ -207,7 +207,7 @@ public class ExpressionParser {
       return g -> g.situationCount() == g.situationCount();
     default:
       return g -> {
-        Log.d(LOG_TAG," +++++++++++ situation "
+        Log.v(LOG_TAG," +++++++++++ situation "
               + g.situationCount() + " == value "
               + Integer.parseInt(se.op2) + " ==> "
               + (g.situationCount() == Integer.parseInt(se.op2)) );
@@ -225,7 +225,7 @@ public class ExpressionParser {
       return g -> g.situationCount() != g.situationCount();
     default:
       return g -> {
-        Log.d(LOG_TAG," +++++++++++ situation "
+        Log.v(LOG_TAG," +++++++++++ situation "
               + g.situationCount() + " != value "
               + Integer.parseInt(se.op2) + " ==> "
               + (g.situationCount() != Integer.parseInt(se.op2)) );
@@ -266,11 +266,11 @@ public class ExpressionParser {
     //    System.err.println(" createPredicate(" + se +")");
     if (!validateSimpleExpr(se)) {
       // TODO: throw exception
-      Log.d(LOG_TAG,"ERROR in expression: " + se);
+      Log.v(LOG_TAG,"ERROR in expression: " + se);
       return null;
     }
 
-    Log.i(LOG_TAG,"Create predicate from: " + se);
+    Log.v(LOG_TAG,"Create predicate from: " + se);
 
     switch (se.expr) {
     case HAS:
@@ -296,15 +296,15 @@ public class ExpressionParser {
     private Predicate<Game> createPredicateOld(SimpleExpr se) {
     if (!validateSimpleExpr(se)) {
     // TODO: throw exception
-    Log.d(LOG_TAG,"ERROR in expression: " + se);
+    Log.v(LOG_TAG,"ERROR in expression: " + se);
     return null;
     }
 
-    Log.d(LOG_TAG,"createPredicate(" + se + ") ==> " + "new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
+    Log.v(LOG_TAG,"createPredicate(" + se + ") ==> " + "new java.util.function.Predicate(function(g) { return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})");
     ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
     try {
     String funcStr = "new java.util.function.Predicate(function(g) { System.out.println(\" ---------------------- hej ----------------------- \") ; return " + gameExpressionToJava(se.expr) + se.expr + se.op2 + ";})";
-    Log.d(LOG_TAG,"createPredicate(" + se + ") ==> " + funcStr);
+    Log.v(LOG_TAG,"createPredicate(" + se + ") ==> " + funcStr);
     return (Predicate<Game>) engine.eval(funcStr);
     } catch (ScriptException e) {
     e.printStackTrace();
@@ -358,7 +358,7 @@ public class ExpressionParser {
     if (validateHasNotExpression(se)) {
       return true;
     }
-    Log.d(LOG_TAG, "Invalid or incomplete Simple Expression: " + se);
+    Log.v(LOG_TAG, "Invalid or incomplete Simple Expression: " + se);
     return false;
   }
 
@@ -369,7 +369,7 @@ public class ExpressionParser {
     } else if (op.equals(OR)) {
       return predicate.or(parseSimple(expr));
     } else {
-      Log.d(LOG_TAG,"Invalid operator::            " + op + "   <---------------------- ERROR --------------");
+      Log.v(LOG_TAG,"Invalid operator::            " + op + "   <---------------------- ERROR --------------");
       return null;
     }
     
@@ -384,7 +384,7 @@ public class ExpressionParser {
     StringBuilder sb = new StringBuilder();
     String savedOp = AND;
     for (String e : expressions) {
-      Log.i(LOG_TAG, "Parsing: " + e);
+      Log.v(LOG_TAG, "Parsing: " + e);
       if (logicalOperators.contains(e)) {
         predicate = addPredicate(predicate, savedOp, sb.toString());
         savedOp = e;
@@ -412,19 +412,19 @@ public class ExpressionParser {
     SimpleExpr se = new SimpleExpr();
     for (String e : expressions) {
       if (validateSimpleExpr(se)) {
-        Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
+        Log.v(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
         return createPredicate(se);
       } else {
-        Log.d(LOG_TAG,"Invalid expression:" + se.op1 + " " + se.expr + " " + se.op2);
+        Log.v(LOG_TAG,"Invalid expression:" + se.op1 + " " + se.expr + " " + se.op2);
       }
-      //   Log.d(LOG_TAG," Check: " + e);
+      //   Log.v(LOG_TAG," Check: " + e);
       if (e.equals("")) {
-        Log.d(LOG_TAG," * empty string");
+        Log.v(LOG_TAG," * empty string");
       } else if (compareOperators.contains(e)) {
-        Log.d(LOG_TAG," * compareoperator: " + e);
-        Log.d(LOG_TAG," * game: " + e);
+        Log.v(LOG_TAG," * compareoperator: " + e);
+        Log.v(LOG_TAG," * game: " + e);
         if (se.op1 == null || se.op2 != null) {
-          Log.d(LOG_TAG," * INVALID SYNTAX");
+          Log.v(LOG_TAG," * INVALID SYNTAX");
         } else {
           se.expr = e;
         }
@@ -433,14 +433,14 @@ public class ExpressionParser {
       } else if (HASNOT.equals(e)) {
         se.expr = e;
       } else if (gameExpressions.contains(e)) {
-        Log.d(LOG_TAG," * game expr: " + e);
+        Log.v(LOG_TAG," * game expr: " + e);
         if (se.op1 != null) {
           se.op2 = e;
         } else {
           se.op1 = e;
         }
       } else if (isNumeric(e)) {
-        Log.d(LOG_TAG," * number: " + e);
+        Log.v(LOG_TAG," * number: " + e);
         if (se.op1 != null) {
           se.op2 = e;
         } else {
@@ -453,7 +453,7 @@ public class ExpressionParser {
       }
     }
     if (validateSimpleExpr(se)) {
-      Log.d(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
+      Log.v(LOG_TAG,"Valid expression::" + se.op1 + " " + se.expr + " " + se.op2);
       return createPredicate(se);
     }
     if (logicalOperator==null || (logicalOperator.equals("")) ) {
