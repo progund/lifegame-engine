@@ -16,6 +16,7 @@ import java.util.function.Predicate;
 public class JParser {
 
   public final static String GAME_TITLE = "title";
+  public final static String GAME_SUBTITLE = "subtitle";
   public final static String GAME_SITUATIONS = "situations";
   public final static String GAME_START = "start";
 
@@ -164,11 +165,12 @@ public class JParser {
   
   public Game game(JSONObject jsondata) throws InvalidLifeException {
     String title = jsondata.getString(GAME_TITLE);
+    String subtitle = jsondata.getString(GAME_SUBTITLE);
     String startSituationString = jsondata.getString(GAME_START);
     JSONArray jsonSituations = jsondata.getJSONArray(GAME_SITUATIONS);
     Map<String, Situation> situations = situations(jsonSituations);
     Situation startSituation = situations.get(startSituationString);
-    return new Game(title, situations, startSituation, null, thingsNeeded);
+    return new Game(title, subtitle, situations, startSituation, null, thingsNeeded);
   }
 
   public Game game(String jsonFile) throws InvalidLifeException {

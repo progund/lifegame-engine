@@ -43,7 +43,9 @@ public class LifeGameEngine {
 
 
   public String explanation() {
-    return latestExplanation;
+    String ret = latestExplanation;
+    latestExplanation = null;
+    return ret;
   }
   
   public Situation handleExit(String answer) {
@@ -121,6 +123,14 @@ public class LifeGameEngine {
 
   public Game game() {
     return game;
+  }
+
+  public String gameTitle() {
+    return game.title();
+  }
+
+  public String gameSubTitle() {
+    return game.subTitle();
   }
 
   public void removeActionThing(ThingAction action) {

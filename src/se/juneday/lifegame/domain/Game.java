@@ -11,6 +11,7 @@ import java.util.Set;
 public class Game {
 
   private String title;
+  private String subTitle;
   private Situation startSitution;
   private Map<String, Situation> situations;
   private int situationCount;
@@ -20,10 +21,13 @@ public class Game {
 
   private static final String LOG_TAG = Game.class.getSimpleName();  
   
-  public Game(String title, Map<String, Situation> situations,
-              Situation startSitution, Map<ThingAction, Integer> things,
+  public Game(String title, String subTitle,
+              Map<String, Situation> situations,
+              Situation startSitution,
+              Map<ThingAction, Integer> things,
               Set<String> thingsNeeded) {
     this.title = title;
+    this.subTitle = subTitle;
     this.situations = situations;
     situations.put("End of game", Situation.endSituation);
     this.startSitution = startSitution;
@@ -70,6 +74,14 @@ public class Game {
 
   public int score() {
     return score;
+  }
+
+  public String title() {
+    return title;
+  }
+
+  public String subTitle() {
+    return subTitle;
   }
 
   public int incScore(int amount) {

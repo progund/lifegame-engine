@@ -1,10 +1,11 @@
 {
-    "title": "Universitetsspelet - Nå Nirvana i akademin",
+    "title": "Universitetet",
+    "subtitle": "Nå Nirvana i akademin",
     "start": "Entren",
     "situations": [
         {
             "title": "Entren",
-            "description": "Du befinner dig i ingången till universitetet. Byggnaden skapar ett intryck av att här finner man kunskap och kan lära sig mycket.",
+            "description": "Du befinner dig i ingången till universitetet. Byggnaden skapar ett intryck av att man här kan finna kunskap och lärdom.",
             "question": "Vad gör du?",
             "things": [
                 {
@@ -43,17 +44,17 @@
             ],
             "suggestions": [
                 {
-                    "phrase": "Gå till puben",
+                    "phrase": "Går till puben",
                     "exit": "Studentpuben",
                     "score": 10
                 },
                 {
-                    "phrase": "Gå till studentrummt",
+                    "phrase": "Går till studentrummt",
                     "exit": "Studentrummet",
                     "score": 0
                 },
                 {
-                    "phrase": "Stanna på föreläsningen och ser vad som händer",
+                    "phrase": "Stannar på föreläsningen och ser vad som händer",
                     "exit": "Föreläsning om hippologi"
                 },
                 {
@@ -68,7 +69,7 @@
         },
         {
             "title": "Studentrummet",
-            "description": "Du befinner dig i studentrumet. Här finns kök, glas, bord och trevliga studenter. Det verkar vara god stämning i rummet och en anda av samarbete finns där så det finns inget behov av tapter med apor på (en tapet med apor ökar som du säkert vet samhörighet och viljan att samverka).",
+            "description": "Du befinner dig i studentrumet. Här finns kök, glas, bord och trevliga studenter. Det verkar vara god stämning i rummet och en anda av samarbete finns där också. Det finns med andra ord inget behov av tapter med apor på (en tapet med apor ökar som du säkert vet samhörighet och viljan att samverka).",
             "question": "Vad gör du?",
             "things": [
                 {
@@ -77,7 +78,7 @@
             ],
             "suggestions": [
                 {
-                    "phrase": "Gå till puben",
+                    "phrase": "Går till puben",
                     "exit": "Studentpuben"
                 },
                 {
@@ -86,7 +87,7 @@
                     "explanation": "Toaletten finns nu, efter sommarens ombyggnad, inne i lärarnas korridor. Du kan inte gå på toaletten på denna våning längre. Sorry"
                 },
                 {
-                    "phrase": "Stanna i Studentrummet",
+                    "phrase": "Stannar i Studentrummet",
                     "exit": "Studentrummet"
                 },
                 {
@@ -98,7 +99,7 @@
                     "exit": "Föreläsning om hippologi"
                 },
                 {
-                    "phrase": "Gå på Face-to-face-möte med CGI",
+                    "phrase": "Går på Face-to-face-möte med CGI",
                     "exit": "Face to face-möte med CGI"
                 },
                 {
