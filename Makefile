@@ -34,6 +34,9 @@ swe: $(JAVA_CLASSES)
 swe-game: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
 
+sw-game: $(JAVA_CLASSES)
+	java -cp $(CLASSPATH) $(LIFE_CLI) data/sw-development.json
+
 swe-test-ok: $(JAVA_CLASSES)
 	for i in 2 0 9 0 2 2 2 2 2 2 2 2 2 2 2 2 0 5 1 5 0 0 0 6 1 5 0 0 2 2 2 2 2 2 2 0 7 0 0 0 1 7 8 0 0 0; do printf "%s\n" $$i ; sleep 0.1 ; done | java -cp $(CLASSPATH) $(LIFE_CLI) data/univ-game-swe.json
  

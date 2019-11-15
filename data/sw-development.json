@@ -1,0 +1,34 @@
+{
+    "title": "Software Development",
+    "subtitle": "Experience software development",
+    "start": "Company lobby",
+    "situations": [
+        {
+            "title": "Company lobby",
+            "description": "You're in the lobby of the company where you join a development team. The goal is to totally rewrite IT as we see it today - with an app",
+            "question": "What do you do?",
+            "things": [
+                {
+                    "thing": "pen"
+                }
+            ],
+            "suggestions": [
+                {
+                    "phrase": "Enter the project's meeting room",
+                    "exits": [
+                        {
+                            "expr": "default",
+                            "situation": "Meeting room"
+                        }
+                    ]
+                },
+                {
+                    "phrase": "Turn around and leave the place",
+                    "exit": "End of game"
+                }
+            ]
+        }
+    ]
+}
+    
+    
