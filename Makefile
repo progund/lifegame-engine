@@ -49,6 +49,8 @@ swe-test: $(JAVA_CLASSES)
 
 verify: $(JAVA_CLASSES)
 	java -cp $(CLASSPATH) $(VERIFY) data/univ-game-swe.json
+	java -cp $(CLASSPATH) $(VERIFY) data/sw-development.json
+	java -cp $(CLASSPATH) $(VERIFY) data/univ-game-en.json
 
 situations: 
 	@cat data/univ-game-swe.json | jq '.situations[].title'
