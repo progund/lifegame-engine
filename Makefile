@@ -65,7 +65,7 @@ unit-test: $(JAVA_CLASSES)
 	@echo "---===[ Testing expressions ]===-----"
 	java -cp $(CLASSPATH) se.juneday.lifegame.test.TestExpression
 
-test: unit-test swe-test1
+test: unit-test #swe-test1
 
 .PHONY: doc
 
